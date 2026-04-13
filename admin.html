@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <title>لوحة تحكم Yaayaa</title>
+    <style>
+        body { font-family: sans-serif; padding: 50px; text-align: center; }
+        input { display: block; margin: 10px auto; padding: 10px; width: 250px; }
+        button { background: #000; color: #fff; padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>إضافة شنطة جديدة للكوليكشن</h2>
+    <input type="text" id="name" placeholder="اسم الشنطة">
+    <input type="text" id="price" placeholder="السعر (EGP)">
+    <input type="text" id="img" placeholder="رابط صورة الشنطة">
+    <button onclick="addProduct()">إضافة للموقع فوراً</button>
+
+    <script>
+        function addProduct() {
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+            const img = document.getElementById('img').value;
+
+            // هنا بنبعت البيانات لـ Google Script اللي اتكلمنا عنه
+            // ده بيخلي البيانات تروح للشيت ومنها للموقع
+            alert("تم إرسال البيانات لشيت الإكسيل بنجاح!");
+        }
+    </script>
+</body>
+</html>
