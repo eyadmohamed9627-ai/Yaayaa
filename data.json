@@ -1,0 +1,26 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "شنطة جلد كلاسيك سوداء",
+      "price": 350,
+      "category": "leather",
+      "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
+      "description": "شنطة جلد أصلي عالية الجودة، مثالية للاستخدام اليومي",
+      "stock": 15,
+      "rating": 4.8,
+      "sales": 127
+    },
+    {
+      "id": 2,
+      "name": "شنطة ظهر قماش ملونة",
+      "price": 220,
+      "category": "backpack",
+      "image": "https://images.unsplash.com/photo-1551782450-171fdb0b8c78?w=400",
+      "description": "تصميم عصري وألوان مبهجة للشباب",
+      "stock": 23,
+      "rating": 4.5,
+      "sales": 89
+    }
+  ]
+}
