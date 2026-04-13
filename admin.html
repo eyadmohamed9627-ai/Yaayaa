@@ -1,29 +1,71 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <title>لوحة تحكم Yaayaa</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yaayaa | Admin Panel</title>
     <style>
-        body { font-family: sans-serif; padding: 50px; text-align: center; }
-        input { display: block; margin: 10px auto; padding: 10px; width: 250px; }
-        button { background: #000; color: #fff; padding: 10px 20px; cursor: pointer; }
+        :root { --main-color: #000; --bg-color: #f4f4f4; }
+        body { font-family: 'Arial', sans-serif; background: var(--bg-color); display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .admin-card { background: white; padding: 40px; border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .logo { font-size: 32px; font-weight: bold; letter-spacing: 5px; margin-bottom: 30px; border-bottom: 2px solid #000; display: inline-block; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--main-color); }
+        button { width: 100%; padding: 15px; background: var(--main-color); color: white; border: none; cursor: pointer; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        button:hover { background: #333; }
+        .back-link { display: block; margin-top: 15px; font-size: 12px; color: #666; text-decoration: none; }
     </style>
 </head>
 <body>
-    <h2>إضافة شنطة جديدة للكوليكشن</h2>
-    <input type="text" id="name" placeholder="اسم الشنطة">
-    <input type="text" id="price" placeholder="السعر (EGP)">
-    <input type="text" id="img" placeholder="رابط صورة الشنطة">
-    <button onclick="addProduct()">إضافة للموقع فوراً</button>
+
+    <div class="admin-card">
+        <div class="logo">YAAYAA</div>
+        <p>إضافة منتج جديد للكوليكشن</p>
+        
+        <input type="text" id="pName" placeholder="اسم المنتج">
+        <input type="text" id="pPrice" placeholder="السعر (مثلاً: 1200 EGP)">
+        <input type="text" id="pImage" placeholder="رابط صورة المنتج">
+        <input type="text" id="pCategory" placeholder="الفئة (جلد / قماش / ظهر)">
+        
+        <button onclick="sendData()">تحديث الكوليكشن</button>
+        
+        <a href="index.html" class="back-link">العودة للموقع الرئيسي</a>
+    </div>
 
     <script>
-        function addProduct() {
-            const name = document.getElementById('name').value;
-            const price = document.getElementById('price').value;
-            const img = document.getElementById('img').value;
+        async function sendData() {
+            const btn = document.querySelector('button');
+            const url = "حط_لينك_الـAPPS_SCRIPT_بتاعك_هنا"; // اللينك اللي طلعلك من جوجل
+            
+            const data = {
+                name: document.getElementById('pName').value,
+                price: document.getElementById('pPrice').value,
+                image: document.getElementById('pImage').value,
+                category: document.getElementById('pCategory').value
+            };
 
-            // هنا بنبعت البيانات لـ Google Script اللي اتكلمنا عنه
-            // ده بيخلي البيانات تروح للشيت ومنها للموقع
-            alert("تم إرسال البيانات لشيت الإكسيل بنجاح!");
+            if(!data.name || !data.price || !data.image) {
+                alert("برجاء ملء الخانات الأساسية");
+                return;
+            }
+
+            btn.innerText = "جاري الإضافة...";
+            btn.style.opacity = "0.5";
+
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    mode: 'no-cors', // مهم جداً عشان يتخطى مشاكل الـ CORS
+                    cache: 'no-cache',
+                    body: JSON.stringify(data)
+                });
+                
+                alert("تمت إضافة المنتج لـ Yaayaa بنجاح!");
+                location.reload(); // ريفريش للصفحة بعد الإضافة
+            } catch (error) {
+                alert("حدث خطأ، تأكد من إعدادات Google Script");
+                console.error(error);
+            }
         }
     </script>
 </body>
