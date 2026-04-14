@@ -3,127 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Step 1 - Luxury Bags & Caps</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Step 1 Luxury - Shop Now ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root {
-            --primary-pink: #ff6b9d;
-            --dark-pink: #c44569;
-            --black: #121212;
-            --gray-text: #707070;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: #f9f9f9; color: var(--black); overflow-x: hidden; }
+        body { background: #f8f8f8; color: #000; direction: rtl; }
 
         /* الهيدر */
-        .header { background: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logo { font-weight: 700; font-size: 1.4rem; color: var(--black); text-decoration: none; }
-        .nav-icons { display: flex; gap: 20px; font-size: 1.2rem; }
+        .header { background: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: #000; text-decoration: none; }
 
         /* شبكة المنتجات */
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; }
         .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-
-        .product-card { background: white; border-radius: 15px; overflow: hidden; cursor: pointer; transition: 0.3s; position: relative; }
-        .product-image-box { position: relative; height: 250px; }
-        .product-image-box img { width: 100%; height: 100%; object-fit: cover; }
-        .sale-badge { position: absolute; top: 10px; left: 10px; background: white; color: black; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .product-card { background: white; border-radius: 15px; overflow: hidden; cursor: pointer; position: relative; border: 1px solid #eee; }
+        .product-img { width: 100%; height: 230px; object-fit: cover; }
+        .sale-badge { position: absolute; top: 10px; left: 10px; background: #000; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
         
         .product-info { padding: 12px; }
-        .p-name { font-weight: 500; font-size: 0.95rem; margin-bottom: 5px; color: #333; }
-        .p-price-row { display: flex; gap: 8px; align-items: center; }
-        .p-price-new { font-weight: 700; font-size: 1rem; }
-        .p-price-old { color: #aaa; text-decoration: line-through; font-size: 0.85rem; }
+        .p-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 8px; color: #333; }
+        .p-new { font-weight: 800; color: #000; font-size: 1rem; margin-left: 5px; }
+        .p-old { color: #aaa; text-decoration: line-through; font-size: 0.8rem; }
 
         /* صفحة تفاصيل المنتج (Ticket Overlay) */
         .product-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: white; z-index: 2000; display: none; overflow-y: auto;
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white; z-index: 3000; display: none; overflow-y: auto;
+            animation: slideUp 0.4s cubic-bezier(0, 0, 0.2, 1);
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .close-btn { position: fixed; top: 20px; right: 20px; font-size: 1.8rem; cursor: pointer; z-index: 10; background: rgba(255,255,255,0.8); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-        .close-btn { position: fixed; top: 20px; right: 20px; z-index: 2100; background: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); cursor: pointer; font-size: 1.2rem; }
-
-        .details-img-container { width: 100%; height: 60vh; position: relative; }
-        .details-img-container img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .details-body { padding: 25px; max-width: 600px; margin: 0 auto; }
-        .details-title { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
-
-        /* تنسيق الأسعار المصلح (عشان التمن يبان) */
+        /* تنسيق الأسعار المخصومة الواضحة */
         .ticket-prices { display: flex; align-items: baseline; gap: 15px; margin: 15px 0 25px 0; }
-        .price-now { font-size: 1.8rem; font-weight: 800; color: #000; } /* أسود عريض */
-        .price-was { font-size: 1.2rem; color: #a0a0a0; text-decoration: line-through; }
-        .currency { font-size: 1.1rem; font-weight: 600; margin-left: 3px; }
+        .price-now { font-size: 2rem; font-weight: 800; color: #000; }
+        .price-was { font-size: 1.3rem; color: #b0b0b0; text-decoration: line-through; font-weight: 400; }
+        .currency { font-size: 1rem; font-weight: 700; margin-left: 5px; color: #000; }
 
-        .details-desc-box { border-top: 1px solid #eee; padding-top: 20px; line-height: 1.6; color: #555; }
+        /* استمارة الطلب (البيانات اللي هتوصلك عالإيميل) */
+        .order-section { padding: 25px; background: #fff; border-top: 8px solid #f0f0f0; margin-top: 20px; padding-bottom: 120px; }
+        .order-section h3 { margin-bottom: 20px; font-size: 1.3rem; font-weight: 700; border-right: 4px solid #000; padding-right: 10px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: #444; }
+        .form-group input, .form-group textarea { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; outline: none; background: #fafafa; }
+        .form-group input:focus { border-color: #000; background: #fff; }
 
-        /* أزرار الأكشن السفلية */
-        .footer-actions {
+        /* البار السفلي الثابت */
+        .footer-bar {
             position: fixed; bottom: 0; left: 0; width: 100%; background: white;
-            padding: 15px 20px; display: flex; gap: 12px; box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
-            z-index: 2050;
+            padding: 15px 20px; display: flex; gap: 12px; box-shadow: 0 -5px 15px rgba(0,0,0,0.08); z-index: 3100;
         }
-        .qty-picker { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 8px; padding: 0 15px; background: #fff; }
-        .qty-btn { background: none; border: none; font-size: 1.3rem; padding: 5px 10px; cursor: pointer; }
+        .qty-control { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 10px; padding: 0 10px; background: #fff; }
+        .qty-btn { border: none; background: none; font-size: 1.5rem; padding: 5px 10px; cursor: pointer; color: #333; }
         
-        .add-to-cart-big {
-            flex: 1; background: var(--black); color: white; border: none;
-            border-radius: 8px; font-weight: 700; font-size: 1.1rem; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+        .buy-now-btn {
+            flex: 1; background: #000; color: #fff; border: none;
+            border-radius: 10px; font-weight: 700; font-size: 1.1rem; cursor: pointer;
+            transition: 0.2s;
         }
-
-        /* السلة الجانبية */
-        .cart-sidebar { position: fixed; top: 0; left: -100%; width: 350px; height: 100%; background: white; z-index: 3000; transition: 0.4s; padding: 20px; box-shadow: 5px 0 20px rgba(0,0,0,0.1); }
-        .cart-sidebar.open { left: 0; }
-        .cart-item { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .cart-item img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
+        .buy-now-btn:active { transform: scale(0.97); }
 
         @media (max-width: 480px) {
-            .details-img-container { height: 50vh; }
+            .price-now { font-size: 1.7rem; }
             .details-title { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="header">
-        <div style="display:flex; gap:15px; font-size:1.2rem;">
-            <i class="fas fa-bars"></i>
-            <i class="fas fa-search"></i>
-        </div>
-        <a href="#" class="logo">Step 1</a>
-        <div class="nav-icons">
-            <i class="fas fa-user"></i>
-            <i class="fas fa-shopping-bag" onclick="toggleCart()"></i>
-        </div>
-    </nav>
+    <header class="header">
+        <i class="fas fa-bars"></i>
+        <a href="#" class="logo">STEP 1</a>
+        <i class="fas fa-shopping-bag"></i>
+    </header>
 
-    <div class="cart-sidebar" id="cartSidebar">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-            <h3>شنطتك ✨</h3>
-            <span onclick="toggleCart()" style="cursor:pointer; font-size:1.8rem;">&times;</span>
-        </div>
-        <div id="cartItems"></div>
-        <div id="cartTotalBox" style="margin-top:20px; font-weight:700; border-top:1px solid #eee; padding-top:15px;">
-            الإجمالي: <span id="cartTotal">0</span> ج.م
-        </div>
+    <div class="container">
+        <h2 style="margin-bottom: 20px; font-weight: 700;">Trending Now</h2>
+        <div class="products-grid" id="mainGrid"></div>
     </div>
 
     <div class="product-overlay" id="productPage">
         <div class="close-btn" onclick="closeProduct()"><i class="fas fa-times"></i></div>
+        <img src="" id="d-image" style="width:100%; height:55vh; object-fit:cover;">
         
-        <div class="details-img-container">
-            <img src="" id="d-image">
-        </div>
-
-        <div class="details-body">
-            <h1 id="d-title" class="details-title"></h1>
+        <div style="padding: 25px;">
+            <h1 id="d-title" style="font-size:1.8rem; font-weight:800; margin-bottom:5px;"></h1>
             
             <div class="ticket-prices">
                 <div class="price-now">
@@ -134,72 +100,76 @@
                 </div>
             </div>
 
-            <div class="details-desc-box">
-                <h4 style="margin-bottom:10px;">وصف المنتج:</h4>
-                <p id="d-desc"></p>
-            </div>
-        </div>
+            <form action="https://formspree.io/f/xjgjkvqv" method="POST" class="order-section">
+                <h3>بيانات التوصيل 🚚</h3>
+                
+                <input type="hidden" name="المنتج" id="hidden-title">
+                <input type="hidden" name="السعر" id="hidden-price">
+                <input type="hidden" name="الكمية" id="hidden-qty" value="1">
 
-        <div class="footer-actions">
-            <div class="qty-picker">
-                <button class="qty-btn" onclick="changeQty(-1)">-</button>
-                <span id="q-val" style="margin: 0 10px; font-weight:600;">1</span>
-                <button class="qty-btn" onclick="changeQty(1)">+</button>
-            </div>
-            <button class="add-to-cart-big" id="finalAddBtn">
-                <i class="fas fa-shopping-cart"></i> Add to cart
-            </button>
-        </div>
-    </div>
+                <div class="form-group">
+                    <label>الاسم بالكامل</label>
+                    <input type="text" name="الاسم" placeholder="اكتب اسمك الثلاثي..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label>رقم الموبايل</label>
+                    <input type="tel" name="الهاتف" placeholder="رقم متاح للاتصال..." required>
+                </div>
 
-    <div class="container">
-        <h2 class="section-title">Products</h2>
-        <div class="products-grid" id="mainGrid"></div>
+                <div class="form-group">
+                    <label>العنوان بالتفصيل</label>
+                    <textarea name="العنوان" rows="3" placeholder="المحافظة - المنطقة - اسم الشارع..." required></textarea>
+                </div>
+
+                <div class="footer-bar">
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" onclick="updateQty(-1)">-</button>
+                        <span id="qty-val" style="margin: 0 12px; font-weight:800; font-size:1.1rem;">1</span>
+                        <button type="button" class="qty-btn" onclick="updateQty(1)">+</button>
+                    </div>
+                    <button type="submit" class="buy-now-btn">تأكيد الطلب | Confirm 🛍️</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script>
         const products = [
             { 
                 id: 1, 
-                name: "شنطة قلب روان ✨", 
-                price: 850, 
-                oldPrice: 1100,
-                image: "https://i.ibb.co/bjpkyqTT/IMG-1855.jpg",
-                desc: "شنطة جلد طبيعي بتصميم القلب المميز، تناسب الخروجات الكاجوال والسواريه. خامات مستوردة وتقفيل عالي الجودة."
+                name: "Diesel Classic Cap", 
+                price: 350, 
+                oldPrice: 500, 
+                image: "https://i.ibb.co/0V2N7xW/diesel-cap.jpg" 
             },
             { 
                 id: 2, 
-                name: "شنطة Coach Original", 
+                name: "Coach Luxury Bag", 
                 price: 1200, 
-                oldPrice: 1500,
-                image: "https://i.ibb.co/PsNk8D6b/IMG-1874.jpg",
-                desc: "شنطة كوتش بتصميم عصري وأنيق، مساحة واسعة وتفاصيل دقيقة تعبر عن الفخامة."
+                oldPrice: 1500, 
+                image: "https://i.ibb.co/PsNk8D6b/IMG-1874.jpg" 
             },
             { 
                 id: 3, 
-                name: "Classic Diesel Cap", 
-                price: 350, 
-                oldPrice: 500,
-                image: "https://i.ibb.co/0V2N7xW/diesel-cap.jpg",
-                desc: "كاب ديزل بخامات قطنية 100% وتصميم مريح يناسب جميع المقاسات."
+                name: "Chanel Monogram Cap", 
+                price: 400, 
+                oldPrice: 650, 
+                image: "https://i.ibb.co/3c3M6xX/chanel-cap.jpg" 
             }
         ];
 
-        let cart = [];
-
-        function renderGrid() {
+        function render() {
             const grid = document.getElementById('mainGrid');
             grid.innerHTML = products.map(p => `
                 <div class="product-card" onclick="openProduct(${p.id})">
-                    <div class="product-image-box">
-                        <img src="${p.image}">
-                        <div class="sale-badge">Sale</div>
-                    </div>
+                    <div class="sale-badge">SALE</div>
+                    <img src="${p.image}" class="product-img">
                     <div class="product-info">
                         <div class="p-name">${p.name}</div>
-                        <div class="p-price-row">
-                            <span class="p-price-new">LE ${p.price}</span>
-                            <span class="p-price-old">LE ${p.oldPrice}</span>
+                        <div>
+                            <span class="p-new">LE ${p.price}</span>
+                            <span class="p-old">LE ${p.oldPrice}</span>
                         </div>
                     </div>
                 </div>
@@ -212,11 +182,11 @@
             document.getElementById('d-title').innerText = p.name;
             document.getElementById('d-price').innerText = p.price;
             document.getElementById('d-old-price').innerText = p.oldPrice;
-            document.getElementById('d-desc').innerText = p.desc;
-            document.getElementById('q-val').innerText = "1";
-
-            document.getElementById('finalAddBtn').onclick = () => addToCart(p.id);
-
+            
+            // تحديث الحقول المخفية للإيميل
+            document.getElementById('hidden-title').value = p.name;
+            document.getElementById('hidden-price').value = p.price + " LE";
+            
             document.getElementById('productPage').style.display = 'block';
             document.body.style.overflow = 'hidden';
         }
@@ -226,51 +196,16 @@
             document.body.style.overflow = 'auto';
         }
 
-        function changeQty(n) {
-            let q = document.getElementById('q-val');
-            let val = parseInt(q.innerText) + n;
+        function updateQty(n) {
+            let display = document.getElementById('qty-val');
+            let hidden = document.getElementById('hidden-qty');
+            let val = parseInt(display.innerText) + n;
             if(val < 1) val = 1;
-            q.innerText = val;
+            display.innerText = val;
+            hidden.value = val;
         }
 
-        function addToCart(id) {
-            const p = products.find(x => x.id === id);
-            const qty = parseInt(document.getElementById('q-val').innerText);
-            
-            for(let i=0; i<qty; i++) cart.push(p);
-            
-            updateCart();
-            closeProduct();
-            toggleCart();
-        }
-
-        function toggleCart() {
-            document.getElementById('cartSidebar').classList.toggle('open');
-        }
-
-        function updateCart() {
-            const container = document.getElementById('cartItems');
-            container.innerHTML = cart.map((item, index) => `
-                <div class="cart-item">
-                    <img src="${item.image}">
-                    <div style="flex:1">
-                        <div style="font-weight:600; font-size:0.9rem;">${item.name}</div>
-                        <div style="color:var(--dark-pink); font-weight:700;">${item.price} ج.م</div>
-                    </div>
-                    <i class="fas fa-trash" onclick="removeFromCart(${index})" style="color:#ff7675; cursor:pointer;"></i>
-                </div>
-            `).join('');
-            
-            const total = cart.reduce((s, i) => s + i.price, 0);
-            document.getElementById('cartTotal').innerText = total;
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCart();
-        }
-
-        renderGrid();
+        render();
     </script>
 </body>
 </html>
