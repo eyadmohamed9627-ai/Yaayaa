@@ -8,60 +8,54 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root { --brand: #d4a373; --bg: #fdf2f8; --dark: #1a1a1a; }
+        :root { --brand: #d4a373; --dark: #1a1a1a; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background-color: white; color: var(--dark); }
+        body { background-color: white; color: var(--dark); padding-bottom: 80px; }
 
         /* الهيدر */
         .navbar { 
             padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; 
             background: white; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #eee;
         }
-        .logo { font-weight: 900; font-size: 1.4rem; letter-spacing: 1px; }
         .cart-trigger { position: relative; cursor: pointer; font-size: 1.4rem; }
         .badge { position: absolute; top: -5px; right: -8px; background: #fb7185; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; }
 
-        /* شبكة المنتجات الرئيسية */
+        /* شبكة المنتجات */
         .container { padding: 15px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .card { background: white; border-radius: 15px; overflow: hidden; border: 1px solid #f0f0f0; cursor: pointer; }
         .card img { width: 100%; height: 200px; object-fit: cover; }
         .card-info { padding: 10px; text-align: center; }
-        .card-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; }
         .card-price { color: var(--brand); font-weight: 900; }
 
-        /* صفحة تفاصيل المنتج (بتظهر لما تدوس عالشنطة) */
+        /* صفحة المنتج */
         .product-page {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: white; z-index: 2000; display: none; flex-direction: column; overflow-y: auto;
+            background: white; z-index: 2000; display: none; flex-direction: column;
         }
-        .close-page { position: absolute; top: 20px; right: 20px; background: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); cursor: pointer; }
-        .main-img { width: 100%; height: 55vh; object-fit: cover; }
+        .close-page { position: absolute; top: 20px; right: 20px; z-index: 10; background: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); cursor: pointer; }
+        .main-img { width: 100%; height: 50vh; object-fit: cover; }
         .details-box { padding: 25px; }
-        .p-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; }
-        .p-price-row { margin-bottom: 20px; }
-        .p-now { color: var(--brand); font-weight: 900; font-size: 1.5rem; }
-        .p-was { text-decoration: line-through; color: #ccc; margin-left: 10px; }
-        .desc-title { font-weight: 700; margin-bottom: 8px; display: block; }
-        .desc-text { color: #666; font-size: 0.95rem; line-height: 1.6; }
 
-        /* البار السفلي للإضافة للسلة */
+        /* البار السفلي */
         .bottom-actions {
             position: fixed; bottom: 0; left: 0; width: 100%; background: white;
-            padding: 15px 20px; display: flex; gap: 12px; border-top: 1px solid #eee; z-index: 2100;
+            padding: 15px 20px; display: flex; gap: 12px; border-top: 1px solid #eee;
         }
         .qty-control { display: flex; align-items: center; border: 1px solid #eee; border-radius: 12px; padding: 0 10px; }
-        .qty-btn { border: none; background: none; font-size: 1.3rem; padding: 5px 10px; cursor: pointer; color: var(--brand); }
-        .add-cart-btn { flex: 1; background: var(--dark); color: white; border: none; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .add-cart-btn { flex: 1; background: var(--dark); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* السلة والفورم (بتظهر لما تدوس على أيقونة الشنطة فوق) */
+        /* تنبيه الإضافة (Toast) */
+        #toast {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.8); color: white; padding: 10px 20px;
+            border-radius: 50px; font-size: 0.9rem; z-index: 5000; display: none;
+        }
+
+        /* السلة */
         .cart-page {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #fafafa; z-index: 3000; display: none; flex-direction: column; overflow-y: auto;
         }
-        .cart-item { display: flex; gap: 15px; background: white; padding: 12px; border-radius: 15px; margin: 15px; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-        .cart-item img { width: 70px; height: 70px; border-radius: 12px; object-fit: cover; }
-        .form-card { background: white; padding: 25px; border-radius: 20px; margin: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
-        .input-box { width: 100%; padding: 16px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 12px; outline: none; background: #fdfdfd; }
     </style>
 </head>
 <body>
@@ -75,56 +69,41 @@
     </nav>
 
     <div class="container" id="mainGrid"></div>
+    <div id="toast">تمت الإضافة للسلة ✨</div>
 
     <div class="product-page" id="productPage">
         <div class="close-page" onclick="closeProduct()"><i class="fas fa-times"></i></div>
         <img src="" id="detailsImg" class="main-img">
         <div class="details-box">
-            <h1 id="detailsName" class="p-title"></h1>
-            <div class="p-price-row">
-                <span id="detailsPrice" class="p-now"></span>
-                <span id="detailsOld" class="p-was"></span>
+            <h1 id="detailsName" style="font-weight: 900; margin-bottom: 10px;"></h1>
+            <div style="margin-bottom: 20px;">
+                <span id="detailsPrice" style="color: var(--brand); font-weight: 900; font-size: 1.5rem;"></span>
+                <span id="detailsOld" style="text-decoration: line-through; color: #ccc; margin-left: 10px;"></span>
             </div>
-            <span class="desc-title">تفاصيل الشنطة:</span>
-            <p id="detailsDesc" class="desc-text"></p>
+            <p id="detailsDesc" style="color: #666; font-size: 0.95rem;"></p>
         </div>
         <div class="bottom-actions">
             <div class="qty-control">
-                <button class="qty-btn" onclick="updateQty(-1)">-</button>
-                <span id="qtyNum" style="font-weight:900; margin:0 10px;">1</span>
-                <button class="qty-btn" onclick="updateQty(1)">+</button>
+                <button style="border:none; background:none; font-size:1.5rem; padding:5px 10px; color:var(--brand);" onclick="updateQty(-1)">-</button>
+                <span id="qtyNum" style="font-weight:900; margin:0 15px;">1</span>
+                <button style="border:none; background:none; font-size:1.5rem; padding:5px 10px; color:var(--brand);" onclick="updateQty(1)">+</button>
             </div>
-            <button class="add-cart-btn" onclick="addToCart()">🛍️ أضف إلى السلة</button>
+            <button class="add-cart-btn" onclick="addToCartOnly()">🛍️ أضف إلى السلة</button>
         </div>
     </div>
 
     <div class="cart-page" id="cartPage">
         <div class="navbar">
             <h3 style="flex:1; text-align:center;">سلة المشتريات ✨</h3>
-            <i class="fas fa-times" onclick="closeCart()" style="cursor:pointer; font-size:1.2rem;"></i>
+            <i class="fas fa-times" onclick="closeCart()" style="cursor:pointer;"></i>
         </div>
-        
-        <div id="cartList"></div>
-
-        <form action="https://formspree.io/f/xjgjkvqv" method="POST" class="form-card">
-            <h3 style="margin-bottom:20px; text-align:center;">بيانات التوصيل 🚚</h3>
-            <input type="hidden" name="الطلبات" id="hiddenItems">
-            <input type="hidden" name="إجمالي السعر" id="hiddenTotal">
-            
-            <input type="text" name="الاسم" class="input-box" placeholder="الاسم بالكامل" required>
-            <input type="tel" name="الموبايل" class="input-box" placeholder="رقم الموبايل" required>
-            <textarea name="العنوان" class="input-box" rows="3" placeholder="العنوان بالتفصيل (محافظة - منطقة - شارع)" required></textarea>
-            
-            <button type="submit" class="add-cart-btn" style="width:100%; padding:18px;">تأكيد الطلب | Confirm ✅</button>
-        </form>
-    </div>
+        <div id="cartList" style="padding: 15px;"></div>
+        </div>
 
     <script>
         const bags = [
-            { id: 1, name: "Coach Nude Bag", price: 1250, old: 1800, img: "https://i.ibb.co/PsNk8D6b/IMG-1874.jpg", desc: "شنطة كوتش نود بخامات مستوردة وتقفيل عالي الجودة، تناسب الخروجات الكاجوال والسواريه." },
-            { id: 2, name: "Chanel Classic", price: 1600, old: 2100, img: "https://i.ibb.co/3c3M6xX/chanel-cap.jpg", desc: "شانيل كلاسيك بتصميم القلب المميز، جلد طبيعي ناعم جداً وإكسسوارات غير قابلة للصدأ." },
-            { id: 3, name: "Prada Edition", price: 1100, old: 1500, img: "https://i.ibb.co/0V2N7xW/diesel-cap.jpg", desc: "إصدار برادا المحدود، لون مميز وتصميم عصري يناسب البنات الجامعيين." },
-            { id: 4, name: "Dior Saddle", price: 1400, old: 1950, img: "https://i.ibb.co/1Kk7L6x/dior-set.jpg", desc: "ديور سادل الشهيرة، أناقة لا تنتهي مع حزام طويل قابل للتعديل." }
+            { id: 1, name: "Coach Nude Bag", price: 1250, old: 1800, img: "https://i.ibb.co/PsNk8D6b/IMG-1874.jpg", desc: "شنطة كوتش نود بخامات مستوردة وتقفيل عالي الجودة." },
+            { id: 2, name: "Chanel Classic", price: 1600, old: 2100, img: "https://i.ibb.co/3c3M6xX/chanel-cap.jpg", desc: "شانيل كلاسيك بتصميم القلب المميز، جلد طبيعي ناعم." }
         ];
 
         let cart = [];
@@ -136,7 +115,7 @@
                 <div class="card" onclick="viewProduct(${b.id})">
                     <img src="${b.img}">
                     <div class="card-info">
-                        <div class="card-name">${b.name}</div>
+                        <div style="font-weight:700;">${b.name}</div>
                         <div class="card-price">LE ${b.price}</div>
                     </div>
                 </div>
@@ -162,43 +141,25 @@
             if(val > 0) q.innerText = val;
         }
 
-        function addToCart() {
+        // الوظيفة المطلوبة: إضافة فقط مع تنبيه
+        function addToCartOnly() {
             const qty = parseInt(document.getElementById('qtyNum').innerText);
             cart.push({ ...tempItem, qty });
-            updateCart();
+            
+            // تحديث رقم السلة فوق
+            document.getElementById('cartCount').innerText = cart.length;
+            
+            // إظهار تنبيه بسيط
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+
+            // إغلاق صفحة المنتج والرجوع للرئيسية
             closeProduct();
-            alert("تمت إضافة " + tempItem.name + " إلى سلتك ✅");
         }
 
         function openCart() { document.getElementById('cartPage').style.display = 'flex'; }
         function closeCart() { document.getElementById('cartPage').style.display = 'none'; }
-
-        function updateCart() {
-            document.getElementById('cartCount').innerText = cart.length;
-            const list = document.getElementById('cartList');
-            let total = 0;
-            let text = "";
-
-            list.innerHTML = cart.map((item, index) => {
-                total += (item.price * item.qty);
-                text += `${item.name} (${item.qty}), `;
-                return `
-                    <div class="cart-item">
-                        <img src="${item.img}">
-                        <div style="flex:1">
-                            <div style="font-weight:700">${item.name}</div>
-                            <div style="color:var(--brand); font-weight:900;">${item.qty} x ${item.price} LE</div>
-                        </div>
-                        <i class="fas fa-trash-alt" onclick="remove(${index})" style="color:#ff5e5e; cursor:pointer;"></i>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('hiddenItems').value = text;
-            document.getElementById('hiddenTotal').value = total + " LE";
-        }
-
-        function remove(i) { cart.splice(i, 1); updateCart(); }
 
         render();
     </script>
