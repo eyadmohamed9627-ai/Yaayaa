@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YAAYAA STORE ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -15,48 +15,66 @@
             --bg-light: #fef7f1;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Cairo', sans-serif; }
-        body { background-color: var(--bg-light); color: var(--dark-royal); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--dark-royal); line-height: 1.6; }
 
+        /* Navbar */
         .navbar { 
             padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; 
             background: white; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #eee;
         }
-        .logo { font-weight: 900; font-size: 1.4rem; color: var(--dark-royal); text-decoration: none; }
+        .logo { font-weight: 900; font-size: 1.4rem; color: var(--dark-royal); text-decoration: none; letter-spacing: 2px; }
         .cart-icon { position: relative; cursor: pointer; font-size: 1.4rem; color: var(--hafan-dark); }
         .badge { position: absolute; top: -5px; right: -8px; background: #fb7185; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; }
 
         /* Hero Section */
         .hero {
-            height: 70vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://i.ibb.co/wJv0qQ6/image-4.png') no-repeat center;
-            background-size: cover; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center;
+            height: 70vh; 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+            url('https://i.ibb.co/zTXJKbdZ/IMG-1884.jpg') no-repeat center;
+            background-size: cover; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            color: white; 
+            text-align: center;
         }
-        .shop-btn { background: var(--nude-logo); color: white; padding: 15px 40px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; margin-top: 20px; font-size: 1.1rem; }
+        .hero h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 5px; }
+        .hero p { letter-spacing: 2px; font-size: 1rem; margin-bottom: 20px; }
+        .shop-btn { background: var(--nude-logo); color: white; padding: 14px 40px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
+        .shop-btn:hover { background: var(--hafan-dark); transform: scale(1.05); }
 
-        /* Grid */
+        /* Product Grid */
         .container { padding: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .card { background: white; border-radius: 0px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); cursor: pointer; }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 180px; object-fit: cover; }
         .card-info { padding: 12px; text-align: center; }
-        .price { color: var(--hafan-dark); font-weight: 900; }
+        .price { color: var(--hafan-dark); font-weight: 900; margin-top: 5px; }
 
-        /* Overlay */
+        /* Product Details Overlay */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; display: none; overflow-y: auto; }
-        .close { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; z-index: 10; cursor: pointer; }
-        .main-img { width: 100%; height: 50vh; object-fit: cover; }
-        .content { padding: 25px; }
-        .swatch { width: 35px; height: 35px; border-radius: 50%; border: 2px solid #eee; cursor: pointer; margin: 10px 5px; display: inline-block; }
-        .swatch.active { border-color: var(--nude-logo); transform: scale(1.1); }
+        .close { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; z-index: 10; cursor: pointer; background: rgba(255,255,255,0.8); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .main-img { width: 100%; height: 45vh; object-fit: cover; }
+        .content { padding: 25px; margin-bottom: 80px; }
+        .swatch { width: 35px; height: 35px; border-radius: 50%; border: 2px solid #ddd; cursor: pointer; margin: 10px 5px; display: inline-block; transition: 0.2s; }
+        .swatch.active { border-color: var(--hafan-dark); transform: scale(1.2); box-shadow: 0 0 10px rgba(0,0,0,0.1); }
 
-        .footer-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 20px; display: flex; gap: 10px; border-top: 1px solid #eee; z-index: 2100; }
-        .add-btn { flex: 1; background: var(--dark-royal); color: white; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; }
+        /* Sticky Footer for Add to Cart */
+        .footer-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 15px 20px; border-top: 1px solid #eee; z-index: 2100; }
+        .add-btn { width: 100%; background: var(--dark-royal); color: white; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; padding: 15px; font-size: 1rem; }
 
-        /* Cart */
-        .cart-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fafafa; z-index: 3000; display: none; flex-direction: column; overflow-y: auto; }
-        .cart-item { display: flex; gap: 15px; background: white; padding: 15px; border-radius: 15px; margin: 10px 20px; align-items: center; }
-        .cart-item img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
-        .form-box { background: white; padding: 25px; border-radius: 20px; margin: 20px; }
-        .input-lx { width: 100%; padding: 15px; border: 1px solid #eee; border-radius: 10px; margin-bottom: 10px; outline: none; }
+        /* Cart Page */
+        .cart-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fafafa; z-index: 3000; display: none; flex-direction: column; }
+        .cart-items-container { flex: 1; overflow-y: auto; padding-top: 10px; }
+        .cart-item { display: flex; gap: 15px; background: white; padding: 12px; border-radius: 12px; margin: 8px 15px; align-items: center; position: relative; }
+        .cart-item img { width: 70px; height: 70px; border-radius: 8px; object-fit: cover; }
+        .remove-item { position: absolute; left: 15px; color: #ff4d4d; cursor: pointer; font-size: 1.1rem; }
+        
+        .total-box { padding: 15px 25px; background: #fff; border-top: 2px dashed #eee; text-align: center; font-weight: 900; font-size: 1.2rem; color: var(--hafan-dark); }
+        .form-box { background: white; padding: 20px; border-radius: 20px 20px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
+        .input-lx { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 10px; outline: none; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -70,9 +88,9 @@
     </nav>
 
     <div class="hero">
-        <h1 style="font-size: 2.5rem; font-weight: 900;">YAAYAA STORE</h1>
+        <h1>YAAYAA STORE</h1>
         <p>Luxury Leather Bags</p>
-        <button class="shop-btn" onclick="document.getElementById('bagGrid').scrollIntoView()">Shop Now</button>
+        <button class="shop-btn" onclick="document.getElementById('bagGrid').scrollIntoView({behavior: 'smooth'})">تسوقي الآن</button>
     </div>
 
     <div class="container" id="bagGrid"></div>
@@ -81,36 +99,45 @@
         <div class="close" onclick="closeProduct()"><i class="fas fa-times"></i></div>
         <img src="" id="d-img" class="main-img">
         <div class="content">
-            <h2 id="d-title"></h2>
-            <p id="d-price" style="font-size: 1.5rem; color: var(--hafan-dark); font-weight: 900;"></p>
+            <h2 id="d-title" style="margin-bottom: 5px;"></h2>
+            <p id="d-price" style="font-size: 1.4rem; color: var(--hafan-dark); font-weight: 900;"></p>
             <div style="margin: 20px 0;">
-                <p style="font-weight:700;">اختاري اللون:</p>
+                <p style="font-weight:700;">الألوان المتاحة:</p>
                 <div id="swatchList"></div>
             </div>
-            <p style="color: #666;">شنطة فخمة من تصميم YAAYAA بمواد خام ممتازة.</p>
+            <div style="background: #fff; padding: 15px; border-radius: 10px; border-right: 4px solid var(--nude-logo);">
+                <p style="color: #555; font-size: 0.9rem;">تصميم عصري من YAAYAA بخامات عالية الجودة تضمن لكِ الأناقة والتميز.</p>
+            </div>
         </div>
         <div class="footer-bar">
-            <button class="add-btn" style="padding:15px;" onclick="addToCart()">🛍️ أضف إلى السلة</button>
+            <button class="add-btn" onclick="addToCart()">🛍️ أضف إلى السلة</button>
         </div>
     </div>
 
     <div class="cart-page" id="cartPage">
-        <div class="navbar"><div class="logo">سلتك ✨</div><i class="fas fa-times" onclick="closeCart()"></i></div>
-        <div id="cartList"></div>
-        <form action="https://formspree.io/f/xjgjkvqv" method="POST" class="form-box">
-            <input type="hidden" name="الطلبات" id="hiddenData">
-            <input type="text" name="الاسم" class="input-lx" placeholder="الاسم" required>
-            <input type="tel" name="الموبايل" class="input-lx" placeholder="الموبايل" required>
-            <textarea name="العنوان" class="input-lx" placeholder="العنوان"></textarea>
-            <button type="submit" class="add-btn" style="width:100%; padding:18px;">تأكيد الطلب ✅</button>
+        <div class="navbar">
+            <div class="logo">سلتك ✨</div>
+            <i class="fas fa-arrow-left" onclick="closeCart()" style="cursor:pointer; font-size: 1.2rem;"></i>
+        </div>
+        
+        <div class="cart-items-container" id="cartList"></div>
+        
+        <div class="total-box" id="totalBox">الإجمالي: 0 EGP</div>
+
+        <form action="https://formspree.io/f/xjgjkvqv" method="POST" class="form-box" onsubmit="return validateForm()">
+            <input type="hidden" name="تفاصيل الطلب" id="hiddenData">
+            <input type="text" name="الاسم" class="input-lx" placeholder="الاسم بالكامل" required>
+            <input type="tel" name="الموبايل" class="input-lx" placeholder="رقم الموبايل" required>
+            <textarea name="العنوان" class="input-lx" placeholder="العنوان بالتفصيل" required></textarea>
+            <button type="submit" class="add-btn">تأكيد الطلب ✅</button>
         </form>
     </div>
 
     <script>
-        // 🟢 عدل البيانات هنا بكل سهولة 🟢
+        // بيانات المنتجات - يمكنك إضافة المزيد هنا بسهولة
         const bags = [
             { id: 1, name: "DIESEL LUX", price: 1250, variants: [
-                { color: "#FFFFFF", img: "https://i.ibb.co/7tqY7cT9/IMG-1886.jpg", name: "ابيض" },
+                { color: "#FFFFFF", img: "https://i.ibb.co/7tqY7cT9/IMG-1886.jpg", name: "أبيض" },
                 { color: "#1a1a1a", img: "https://i.ibb.co/G4V6qdCt/IMG-1885.jpg", name: "أسود" }
             ]},
             { id: 2, name: "CHANEL BAG", price: 1600, variants: [
@@ -119,66 +146,120 @@
         ];
 
         let cart = [];
-        let tempItem = null;
-        let selectedVar = null;
+        let currentProduct = null;
+        let selectedVariant = null;
 
-        function render() {
+        // عرض المنتجات في الصفحة الرئيسية
+        function renderProducts() {
             const grid = document.getElementById('bagGrid');
             grid.innerHTML = bags.map(b => `
-                <div class="card" onclick="view(${b.id})">
-                    <img src="${b.variants[0].img}">
+                <div class="card" onclick="viewProduct(${b.id})">
+                    <img src="${b.variants[0].img}" alt="${b.name}">
                     <div class="card-info">
-                        <div>${b.name}</div>
-                        <div class="price">LE ${b.price}</div>
+                        <div style="font-weight:700">${b.name}</div>
+                        <div class="price">${b.price} EGP</div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function view(id) {
-            tempItem = bags.find(b => b.id === id);
-            selectedVar = tempItem.variants[0];
-            document.getElementById('d-img').src = selectedVar.img;
-            document.getElementById('d-title').innerText = tempItem.name;
-            document.getElementById('d-price').innerText = "LE " + tempItem.price;
-            
-            const sl = document.getElementById('swatchList');
-            sl.innerHTML = tempItem.variants.map((v, i) => `
-                <div class="swatch ${v === selectedVar ? 'active' : ''}" style="background:${v.color}" onclick="setVar(${i})"></div>
-            `).join('');
-            
+        // فتح تفاصيل المنتج
+        function viewProduct(id) {
+            currentProduct = bags.find(b => b.id === id);
+            selectedVariant = currentProduct.variants[0];
+            updateOverlayUI();
             document.getElementById('overlay').style.display = 'block';
         }
 
-        function setVar(i) {
-            selectedVar = tempItem.variants[i];
-            document.getElementById('d-img').src = selectedVar.img;
-            view(tempItem.id); 
+        // تحديث واجهة التفاصيل عند تغيير اللون
+        function updateOverlayUI() {
+            document.getElementById('d-img').src = selectedVariant.img;
+            document.getElementById('d-title').innerText = currentProduct.name;
+            document.getElementById('d-price').innerText = currentProduct.price + " EGP";
+            
+            const sl = document.getElementById('swatchList');
+            sl.innerHTML = currentProduct.variants.map((v) => `
+                <div class="swatch ${v.name === selectedVariant.name ? 'active' : ''}" 
+                     style="background:${v.color}" 
+                     onclick="selectVariant('${v.name}')"></div>
+            `).join('');
         }
 
+        function selectVariant(vName) {
+            selectedVariant = currentProduct.variants.find(v => v.name === vName);
+            updateOverlayUI();
+        }
+
+        // إضافة للسلة
         function addToCart() {
-            cart.push({...tempItem, variant: selectedVar});
-            document.getElementById('cartBadge').innerText = cart.length;
+            cart.push({
+                cartId: Date.now(),
+                name: currentProduct.name,
+                price: currentProduct.price,
+                variantName: selectedVariant.name,
+                img: selectedVariant.img
+            });
+            updateCartUI();
             closeProduct();
-            updateCart();
-            alert("تمت الإضافة!");
+            alert("تمت الإضافة للسلة ✨");
         }
 
-        function updateCart() {
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            updateCartUI();
+        }
+
+        // تحديث واجهة السلة
+        function updateCartUI() {
             const cl = document.getElementById('cartList');
-            let txt = "";
-            cl.innerHTML = cart.map((item, i) => {
-                txt += `${item.name} (${item.variant.name}), `;
-                return `<div class="cart-item"><img src="${item.variant.img}"><div>${item.name} - ${item.variant.name}</div></div>`;
+            const badge = document.getElementById('cartBadge');
+            const totalBox = document.getElementById('totalBox');
+            
+            badge.innerText = cart.length;
+            
+            let total = 0;
+            let summaryText = "";
+
+            cl.innerHTML = cart.map((item) => {
+                total += item.price;
+                summaryText += `- ${item.name} (${item.variantName}) [${item.price} EGP]\n`;
+                return `
+                    <div class="cart-item">
+                        <img src="${item.img}">
+                        <div>
+                            <div style="font-weight:700">${item.name}</div>
+                            <div style="font-size:0.8rem; color: #777;">اللون: ${item.variantName}</div>
+                            <div style="font-weight:900; color:var(--hafan-dark)">${item.price} EGP</div>
+                        </div>
+                        <i class="fas fa-trash remove-item" onclick="removeFromCart(${item.cartId})"></i>
+                    </div>
+                `;
             }).join('');
-            document.getElementById('hiddenData').value = txt;
+
+            totalBox.innerText = `الإجمالي: ${total} EGP`;
+            document.getElementById('hiddenData').value = summaryText + `\nإجمالي الحساب: ${total} EGP`;
         }
 
-        function openCart() { document.getElementById('cartPage').style.display = 'flex'; }
+        function openCart() { 
+            if(cart.length === 0) {
+                alert("السلة فارغة حالياً");
+                return;
+            }
+            document.getElementById('cartPage').style.display = 'flex'; 
+        }
         function closeCart() { document.getElementById('cartPage').style.display = 'none'; }
         function closeProduct() { document.getElementById('overlay').style.display = 'none'; }
 
-        render();
+        function validateForm() {
+            if(cart.length === 0) {
+                alert("برجاء إضافة منتجات للسلة أولاً");
+                return false;
+            }
+            return true;
+        }
+
+        // تشغيل العرض عند التحميل
+        renderProducts();
     </script>
 </body>
 </html>
