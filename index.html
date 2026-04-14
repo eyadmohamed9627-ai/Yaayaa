@@ -56,7 +56,7 @@
             color: white; font-size: 1.5rem; cursor: pointer; z-index: 1000;
         }
         .order-form { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-        .order-form input { padding: 12px; border-radius: 10px; border: 1px solid #ddd; outline: none; }
+        .order-form input { padding: 12px; border-radius: 10px; border: 1px solid #ddd; outline: none; text-align: right; }
         .checkout-btn {
             background: #00b894; color: white; border: none; padding: 15px;
             border-radius: 25px; cursor: pointer; font-weight: 700; margin-top: 10px;
@@ -80,7 +80,7 @@
             الإجمالي: <span id="cartTotal">0</span> ج.م
         </div>
 
-        <form id="orderForm" action="https://formspree.io/f/mqaeelre" method="POST" class="order-form">
+        <form id="orderForm" action="https://formspree.io/f/xjgjkvqv" method="POST" class="order-form">
             <h4 style="color: #c44569;">بيانات الشحن:</h4>
             <input type="text" name="الاسم" placeholder="الاسم بالكامل" required>
             <input type="tel" name="الموبايل" placeholder="رقم الموبايل" required>
@@ -100,7 +100,6 @@
     </div>
 
     <script>
-        // مصفوفة المنتجات - تقدر تغير البيانات هنا براحتك
         const products = [
             { id: 1, name: "شنطة بينك فيبز", price: 850, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000" },
             { id: 2, name: "شنطة جولد تشين", price: 1200, image: "https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1000" },
