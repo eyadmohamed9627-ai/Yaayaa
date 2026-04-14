@@ -3,224 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YAAYAA STORE | Luxury Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>YAAYAA STORE | Checkout Mode</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        :root {
-            --bg: #ffffff;
-            --secondary-bg: #f2f2f2;
-            --accent: #000000;
-            --text-main: #1a1a1a;
-            --text-muted: #888888;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg); color: var(--text-main); line-height: 1.6; }
+        body { background: #ffffff; overflow-x: hidden; }
 
-        /* الهيدر الشيك */
-        .navbar {
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .logo { font-weight: 800; font-size: 1.4rem; letter-spacing: 2px; text-decoration: none; color: black; }
+        /* الهيدر */
+        .navbar { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; background: #fff; z-index: 100; }
+        .logo { font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; }
 
-        /* حاوية المنتجات */
-        .main-container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        .section-header { margin-bottom: 30px; }
-        .section-header h2 { font-weight: 700; font-size: 1.8rem; }
+        /* كرت المنتج */
+        .product-container { padding: 20px; max-width: 600px; margin: 0 auto; }
+        .product-img { width: 100%; border-radius: 12px; margin-bottom: 15px; }
+        .product-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
+        
+        .price-box { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .price-now { font-size: 1.8rem; font-weight: 800; }
+        .price-was { color: #aaa; text-decoration: line-through; font-size: 1.1rem; }
 
-        /* الكروت المودرن */
-        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .item-card { 
-            background: white; 
-            border-radius: 0; /* الحواف الحادة بتدي فخامة أكتر */
-            overflow: hidden; 
-            cursor: pointer;
-            transition: 0.3s ease;
-        }
-        .item-card:hover { opacity: 0.9; }
-        .img-wrapper { position: relative; width: 100%; height: 260px; background: #f9f9f9; }
-        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .badge { 
-            position: absolute; top: 12px; right: 12px; 
-            background: black; color: white; padding: 4px 10px; 
-            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-        }
-
-        .item-info { padding: 15px 0; }
-        .item-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; }
-        .price-tag { display: flex; align-items: baseline; gap: 10px; }
-        .new-price { font-weight: 700; font-size: 1.1rem; }
-        .old-price { color: var(--text-muted); text-decoration: line-through; font-size: 0.85rem; }
-
-        /* مودال التفاصيل (تيكت الأوردر) */
-        .overlay {
+        /* مودال (نافذة) بيانات التوصيل */
+        .checkout-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: white; z-index: 2000; display: none; overflow-y: auto;
-            animation: fadeIn 0.3s ease;
+            background: rgba(0,0,0,0.5); z-index: 2000; display: none;
+            justify-content: center; align-items: flex-end;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .close-x { position: fixed; top: 20px; right: 20px; font-size: 1.5rem; cursor: pointer; z-index: 2100; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: 1px solid #eee; border-radius: 50%; }
-
-        .details-hero { width: 100%; height: 50vh; overflow: hidden; }
-        .details-hero img { width: 100%; height: 100%; object-fit: cover; }
-
-        .details-body { padding: 30px 20px; max-width: 600px; margin: 0 auto; }
-        .details-title { font-size: 2rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -1px; }
-
-        /* تنسيق السعر اللي طلبت تظبيطه */
-        .hero-prices { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
-        .h-now { font-size: 2.2rem; font-weight: 800; color: #000; }
-        .h-was { font-size: 1.3rem; color: #bbb; text-decoration: line-through; }
-        .curr { font-size: 0.9rem; font-weight: 700; vertical-align: super; margin-left: 4px; }
-
-        /* استمارة الطلب الشيك */
-        .form-card { background: #fafafa; padding: 25px; border-radius: 12px; margin-top: 20px; }
-        .form-card h3 { margin-bottom: 20px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .form-input { 
-            width: 100%; padding: 15px; margin-bottom: 15px; 
-            border: 1px solid #ddd; border-radius: 0; /* حواف حادة للفخامة */
-            font-size: 1rem; outline: none; transition: 0.3s;
+        .checkout-sheet {
+            background: white; width: 100%; max-width: 500px;
+            padding: 30px 20px; border-radius: 25px 25px 0 0;
+            animation: slideUp 0.3s ease-out;
         }
-        .form-input:focus { border-color: black; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .sheet-header h3 { font-weight: 800; font-size: 1.2rem; }
+
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
+        .input-group input, .input-group textarea {
+            width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px;
+            font-size: 1rem; outline: none; background: #f9f9f9;
+        }
 
         /* البار السفلي */
-        .checkout-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%; 
-            background: white; padding: 20px; display: flex; gap: 15px;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.05); z-index: 2200;
+        .footer-action {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: #fff;
+            padding: 15px 20px; border-top: 1px solid #eee; display: flex; gap: 10px; z-index: 1000;
         }
-        .qty-selector { display: flex; align-items: center; border: 1px solid #000; padding: 0 15px; font-weight: 700; }
+        .qty-box { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 10px; padding: 0 10px; }
         .qty-btn { border: none; background: none; font-size: 1.5rem; padding: 5px 10px; cursor: pointer; }
 
-        .order-btn {
+        .primary-btn {
             flex: 1; background: #000; color: #fff; border: none;
-            padding: 18px; font-weight: 700; font-size: 1rem; 
-            text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
-        }
-
-        @media (max-width: 600px) {
-            .product-grid { gap: 10px; }
-            .img-wrapper { height: 200px; }
-            .details-hero { height: 40vh; }
+            padding: 18px; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <i class="fa-solid fa-bars-staggered"></i>
-        <a href="#" class="logo">YAAYAA</a>
-        <i class="fa-solid fa-cart-shopping"></i>
+        <i class="fas fa-bars"></i>
+        <div class="logo">YAAYAA STORE</div>
+        <i class="fas fa-shopping-bag"></i>
     </nav>
 
-    <div class="main-container">
-        <div class="section-header">
-            <h2>الكل</h2>
+    <div class="product-container">
+        <img src="https://i.ibb.co/0V2N7xW/diesel-cap.jpg" class="product-img">
+        <h1 class="product-title">Diesel Classic Cap</h1>
+        <div class="price-box">
+            <span class="price-now">LE 350</span>
+            <span class="price-was">LE 500</span>
         </div>
-        <div class="product-grid" id="mainGrid"></div>
+        <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">خامات مستوردة، تقفيل عالي الجودة، متاح بجميع الألوان.</p>
     </div>
 
-    <div class="overlay" id="productOverlay">
-        <div class="close-x" onclick="closeProduct()"><i class="fa-solid fa-xmark"></i></div>
-        <div class="details-hero"><img src="" id="d-img"></div>
-        
-        <div class="details-body">
-            <h1 id="d-title" class="details-title"></h1>
-            
-            <div class="hero-prices">
-                <div class="h-now"><span class="curr">LE</span><span id="d-price"></span></div>
-                <div class="h-was">LE <span id="d-old-price"></span></div>
+    <div class="footer-action">
+        <div class="qty-box">
+            <button class="qty-btn" onclick="updateQty(-1)">-</button>
+            <span id="main-qty" style="margin: 0 10px; font-weight: 700;">1</span>
+            <button class="qty-btn" onclick="updateQty(1)">+</button>
+        </div>
+        <button class="primary-btn" onclick="showCheckout()">إتمام الطلب | Buy Now 🛍️</button>
+    </div>
+
+    <div class="checkout-overlay" id="checkoutOverlay">
+        <form class="checkout-sheet" action="https://formspree.io/f/xjgjkvqv" method="POST">
+            <div class="sheet-header">
+                <h3>بيانات التوصيل 🚚</h3>
+                <i class="fas fa-times" onclick="closeCheckout()" style="cursor:pointer; font-size:1.2rem;"></i>
             </div>
 
-            <form action="https://formspree.io/f/xjgjkvqv" method="POST" class="form-card">
-                <h3>تفاصيل الشحن</h3>
-                <input type="hidden" name="Product" id="h-prod">
-                <input type="hidden" name="Price" id="h-price">
-                <input type="hidden" name="Qty" id="h-qty" value="1">
+            <input type="hidden" name="Product" value="Diesel Classic Cap">
+            <input type="hidden" name="Price" value="350 LE">
+            <input type="hidden" name="Quantity" id="hidden-qty" value="1">
 
-                <input type="text" name="Name" class="form-input" placeholder="الاسم الكامل" required>
-                <input type="tel" name="Phone" class="form-input" placeholder="رقم الموبايل" required>
-                <textarea name="Address" class="form-input" rows="3" placeholder="العنوان بالتفصيل" required></textarea>
+            <div class="input-group">
+                <label>الاسم بالكامل</label>
+                <input type="text" name="Name" placeholder="اكتب اسمك الثلاثي..." required>
+            </div>
+            <div class="input-group">
+                <label>رقم الموبايل</label>
+                <input type="tel" name="Phone" placeholder="رقم متاح للاتصال..." required>
+            </div>
+            <div class="input-group">
+                <label>العنوان بالتفصيل</label>
+                <textarea name="Address" rows="3" placeholder="المحافظة - المنطقة - اسم الشارع" required></textarea>
+            </div>
 
-                <div class="checkout-bar">
-                    <div class="qty-selector">
-                        <button type="button" class="qty-btn" onclick="setQty(-1)">-</button>
-                        <span id="qty-num" style="margin: 0 10px;">1</span>
-                        <button type="button" class="qty-btn" onclick="setQty(1)">+</button>
-                    </div>
-                    <button type="submit" class="order-btn">إتمام الطلب الآن</button>
-                </div>
-            </form>
-        </div>
+            <button type="submit" class="primary-btn" style="width: 100%; margin-top: 10px;">تأكيد الأوردر | Confirm ✅</button>
+        </form>
     </div>
 
     <script>
-        const products = [
-            { id: 1, name: "DIESEL CLASSIC CAP", price: 350, oldPrice: 500, image: "https://i.ibb.co/0V2N7xW/diesel-cap.jpg" },
-            { id: 2, name: "COACH LUXURY BAG", price: 1200, oldPrice: 1500, image: "https://i.ibb.co/PsNk8D6b/IMG-1874.jpg" },
-            { id: 3, name: "CHANEL MONOGRAM", price: 400, oldPrice: 650, image: "https://i.ibb.co/3c3M6xX/chanel-cap.jpg" },
-            { id: 4, name: "DIOR STYLE SET", price: 350, oldPrice: 600, image: "https://i.ibb.co/1Kk7L6x/dior-set.jpg" }
-        ];
-
-        function render() {
-            const grid = document.getElementById('mainGrid');
-            grid.innerHTML = products.map(p => `
-                <div class="item-card" onclick="openProduct(${p.id})">
-                    <div class="img-wrapper">
-                        <div class="badge">Sale</div>
-                        <img src="${p.image}">
-                    </div>
-                    <div class="item-info">
-                        <div class="item-name">${p.name}</div>
-                        <div class="price-tag">
-                            <span class="new-price">LE ${p.price}</span>
-                            <span class="old-price">LE ${p.oldPrice}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+        function updateQty(n) {
+            let q = document.getElementById('main-qty');
+            let h = document.getElementById('hidden-qty');
+            let val = parseInt(q.innerText) + n;
+            if(val < 1) val = 1;
+            q.innerText = val;
+            h.value = val;
         }
 
-        function openProduct(id) {
-            const p = products.find(x => x.id === id);
-            document.getElementById('d-img').src = p.image;
-            document.getElementById('d-title').innerText = p.name;
-            document.getElementById('d-price').innerText = p.price;
-            document.getElementById('d-old-price').innerText = p.oldPrice;
-            
-            document.getElementById('h-prod').value = p.name;
-            document.getElementById('h-price').value = p.price + " LE";
-            
-            document.getElementById('productOverlay').style.display = 'block';
-            document.body.style.overflow = 'hidden';
+        function showCheckout() {
+            document.getElementById('checkoutOverlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // منع السكرول
         }
 
-        function closeProduct() {
-            document.getElementById('productOverlay').style.display = 'none';
+        function closeCheckout() {
+            document.getElementById('checkoutOverlay').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
 
-        function setQty(n) {
-            let d = document.getElementById('qty-num');
-            let h = document.getElementById('h-qty');
-            let v = parseInt(d.innerText) + n;
-            if(v < 1) v = 1;
-            d.innerText = v;
-            h.value = v;
+        // غلق النافذة عند الضغط خارجها
+        window.onclick = function(event) {
+            let overlay = document.getElementById('checkoutOverlay');
+            if (event.target == overlay) {
+                closeCheckout();
+            }
         }
-
-        render();
     </script>
 </body>
 </html>
