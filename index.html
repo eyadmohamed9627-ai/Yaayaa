@@ -134,27 +134,24 @@
     </div>
 
     <script>
-        // بيانات المنتجات - يمكنك إضافة المزيد هنا بسهولة
         const bags = [
             { id: 1, name: "DIESEL LUX", price: 1250, variants: [
                 { color: "#FFFFFF", img: "https://i.ibb.co/7tqY7cT9/IMG-1886.jpg", name: "أبيض" },
                 { color: "#1a1a1a", img: "https://i.ibb.co/G4V6qdCt/IMG-1885.jpg", name: "أسود" },
-                { color:"‎#ffd700",img: "https://i.ibb.co/fJtJ5sk/IMG-1888.png", name: "gold" },
+                { color:"#ffd700", img: "https://i.ibb.co/fJtJ5sk/IMG-1888.png", name: "gold" }
             ]},
-            { id: 2, name: "Lv", price: 1600, variants: [
+            { id: 2, name: "Lv Jeans", price: 1600, variants: [
                 { color:"#6F8FAF", img: "https://i.ibb.co/7Jd6k9L2/eb1af371-9d7c-40d8-970b-c6060651d6b7.jpg", name: "جينس" }
             ]},
-       { id: 3, name: "Lv", price: 2650, variants: [
-        { color:"#6F8FAF", img: "https://i.ibb.co/p6X7kj81/a4f991d6-a384-41f5-99da-e9fa886f23a1.jpg", name: "جينس" }
-     
-       ];
-
+            { id: 3, name: "Lv Luxury", price: 2650, variants: [
+                { color:"#6F8FAF", img: "https://i.ibb.co/p6X7kj81/a4f991d6-a384-41f5-99da-e9fa886f23a1.jpg", name: "جينس" }
+            ]}
+        ];
 
         let cart = [];
         let currentProduct = null;
         let selectedVariant = null;
 
-        // عرض المنتجات في الصفحة الرئيسية
         function renderProducts() {
             const grid = document.getElementById('bagGrid');
             grid.innerHTML = bags.map(b => `
@@ -168,7 +165,6 @@
             `).join('');
         }
 
-        // فتح تفاصيل المنتج
         function viewProduct(id) {
             currentProduct = bags.find(b => b.id === id);
             selectedVariant = currentProduct.variants[0];
@@ -176,7 +172,6 @@
             document.getElementById('overlay').style.display = 'block';
         }
 
-        // تحديث واجهة التفاصيل عند تغيير اللون
         function updateOverlayUI() {
             document.getElementById('d-img').src = selectedVariant.img;
             document.getElementById('d-title').innerText = currentProduct.name;
@@ -195,7 +190,6 @@
             updateOverlayUI();
         }
 
-        // إضافة للسلة
         function addToCart() {
             cart.push({
                 cartId: Date.now(),
@@ -214,7 +208,6 @@
             updateCartUI();
         }
 
-        // تحديث واجهة السلة
         function updateCartUI() {
             const cl = document.getElementById('cartList');
             const badge = document.getElementById('cartBadge');
@@ -263,7 +256,6 @@
             return true;
         }
 
-        // تشغيل العرض عند التحميل
         renderProducts();
     </script>
 </body>
