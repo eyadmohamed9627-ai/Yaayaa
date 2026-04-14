@@ -53,7 +53,7 @@
         .card-info { padding: 12px; text-align: center; }
         .price { color: var(--hafan-dark); font-weight: 900; margin-top: 5px; }
 
-        /* Product Details Overlay */
+        /* Overlay */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; display: none; overflow-y: auto; }
         .close { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; z-index: 10; cursor: pointer; background: rgba(255,255,255,0.8); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
         .main-img { width: 100%; height: 45vh; object-fit: cover; }
@@ -61,7 +61,6 @@
         .swatch { width: 35px; height: 35px; border-radius: 50%; border: 2px solid #ddd; cursor: pointer; margin: 10px 5px; display: inline-block; transition: 0.2s; }
         .swatch.active { border-color: var(--hafan-dark); transform: scale(1.2); box-shadow: 0 0 10px rgba(0,0,0,0.1); }
 
-        /* Sticky Footer for Add to Cart */
         .footer-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 15px 20px; border-top: 1px solid #eee; z-index: 2100; }
         .add-btn { width: 100%; background: var(--dark-royal); color: white; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; padding: 15px; font-size: 1rem; }
 
@@ -119,11 +118,8 @@
             <div class="logo">سلتك ✨</div>
             <i class="fas fa-arrow-left" onclick="closeCart()" style="cursor:pointer; font-size: 1.2rem;"></i>
         </div>
-        
         <div class="cart-items-container" id="cartList"></div>
-        
         <div class="total-box" id="totalBox">الإجمالي: 0 EGP</div>
-
         <form action="https://formspree.io/f/xjgjkvqv" method="POST" class="form-box" onsubmit="return validateForm()">
             <input type="hidden" name="تفاصيل الطلب" id="hiddenData">
             <input type="text" name="الاسم" class="input-lx" placeholder="الاسم بالكامل" required>
@@ -138,7 +134,7 @@
             { id: 1, name: "couch", price: 750, variants: [
                 { color: "#FFFFFF", img: "https://i.ibb.co/7tqY7cT9/IMG-1886.jpg", name: "أبيض" },
                 { color: "#1a1a1a", img: "https://i.ibb.co/G4V6qdCt/IMG-1885.jpg", name: "أسود" },
-                { color:"#ffd700", img: "https://i.ibb.co/fJtJ5sk/IMG-1888.png", name: "gold" }
+                { color:"#ffd700", img: "https://i.ibb.co/fJtJ5sk/IMG-1888.png", name: "ذهبي" }
             ]},
             { id: 2, name: "Lv Jeans", price: 1600, variants: [
                 { color:"#6F8FAF", img: "https://i.ibb.co/7Jd6k9L2/eb1af371-9d7c-40d8-970b-c6060651d6b7.jpg", name: "جينس" }
@@ -149,9 +145,9 @@
             { id: 4, name: "Lv", price: 1700, variants: [
                 { color:"#d5bca2", img: "https://i.ibb.co/zHf5Jwc6/IMG-1893.jpg", name: "بنى" }
             ]},
-            { id: 5, name: "Lv", price: 1700, variants: [
+            { id: 5, name: "Lv Mini", price: 1700, variants: [
                 { color:"#d5bca2", img: "https://i.ibb.co/qFk4dHR2/IMG-1895.jpg", name: "بنى" }
-
+            ]} // تم تصحيح القوس هنا
         ];
 
         let cart = [];
@@ -220,7 +216,6 @@
             const totalBox = document.getElementById('totalBox');
             
             badge.innerText = cart.length;
-            
             let total = 0;
             let summaryText = "";
 
@@ -245,20 +240,14 @@
         }
 
         function openCart() { 
-            if(cart.length === 0) {
-                alert("السلة فارغة حالياً");
-                return;
-            }
+            if(cart.length === 0) { alert("السلة فارغة حالياً"); return; }
             document.getElementById('cartPage').style.display = 'flex'; 
         }
         function closeCart() { document.getElementById('cartPage').style.display = 'none'; }
         function closeProduct() { document.getElementById('overlay').style.display = 'none'; }
 
         function validateForm() {
-            if(cart.length === 0) {
-                alert("برجاء إضافة منتجات للسلة أولاً");
-                return false;
-            }
+            if(cart.length === 0) { alert("برجاء إضافة منتجات للسلة أولاً"); return false; }
             return true;
         }
 
