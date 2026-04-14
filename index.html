@@ -3,61 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YAAYAA STORE | Checkout Mode</title>
+    <title>YAAYAA STORE | Checkout</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: #ffffff; overflow-x: hidden; }
+        body { background: #fff; color: #000; overflow-x: hidden; }
 
         /* الهيدر */
-        .navbar { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; position: sticky; top: 0; background: #fff; z-index: 100; }
-        .logo { font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; }
+        .navbar { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: #fff; z-index: 1000; }
+        .logo { font-weight: 800; font-size: 1.3rem; letter-spacing: 1px; }
 
-        /* كرت المنتج */
-        .product-container { padding: 20px; max-width: 600px; margin: 0 auto; }
-        .product-img { width: 100%; border-radius: 12px; margin-bottom: 15px; }
-        .product-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; }
+        /* منطقة المنتج */
+        .product-page { padding: 20px; max-width: 600px; margin: 0 auto; }
+        .product-img { width: 100%; border-radius: 15px; margin-bottom: 20px; }
+        .product-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
         
-        .price-box { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-        .price-now { font-size: 1.8rem; font-weight: 800; }
-        .price-was { color: #aaa; text-decoration: line-through; font-size: 1.1rem; }
+        .price-row { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+        .price-now { font-size: 2rem; font-weight: 800; }
+        .price-was { color: #bbb; text-decoration: line-through; font-size: 1.2rem; }
 
-        /* مودال (نافذة) بيانات التوصيل */
-        .checkout-overlay {
+        /* البار السفلي - المرحلة 1: اختيار الكمية والطلب */
+        .bottom-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: #fff;
+            padding: 20px; border-top: 1px solid #eee; display: flex; gap: 12px; z-index: 900;
+        }
+        .qty-input { display: flex; align-items: center; border: 1.5px solid #000; border-radius: 12px; padding: 0 15px; }
+        .qty-btn { border: none; background: none; font-size: 1.5rem; padding: 5px 10px; cursor: pointer; }
+
+        .order-btn {
+            flex: 1; background: #000; color: #fff; border: none;
+            border-radius: 12px; font-weight: 700; font-size: 1.1rem; cursor: pointer;
+        }
+
+        /* نافذة بيانات الشحن - المرحلة 2: تظهر بعد الضغط على طلب */
+        .checkout-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 2000; display: none;
+            background: rgba(0,0,0,0.6); z-index: 2000; display: none;
             justify-content: center; align-items: flex-end;
         }
-        .checkout-sheet {
-            background: white; width: 100%; max-width: 500px;
-            padding: 30px 20px; border-radius: 25px 25px 0 0;
-            animation: slideUp 0.3s ease-out;
+        .checkout-content {
+            background: #fff; width: 100%; max-width: 500px;
+            padding: 35px 25px; border-radius: 25px 25px 0 0;
+            animation: slideUp 0.4s cubic-bezier(0, 0, 0.2, 1);
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .sheet-header h3 { font-weight: 800; font-size: 1.2rem; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .modal-header h3 { font-weight: 800; font-size: 1.4rem; }
 
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; }
-        .input-group input, .input-group textarea {
-            width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 10px;
-            font-size: 1rem; outline: none; background: #f9f9f9;
+        .input-box { margin-bottom: 18px; }
+        .input-box label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.9rem; color: #333; }
+        .input-box input, .input-box textarea {
+            width: 100%; padding: 16px; border: 1px solid #e0e0e0; border-radius: 12px;
+            font-size: 1rem; outline: none; background: #fdfdfd; transition: 0.3s;
         }
+        .input-box input:focus { border-color: #000; }
 
-        /* البار السفلي */
-        .footer-action {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: #fff;
-            padding: 15px 20px; border-top: 1px solid #eee; display: flex; gap: 10px; z-index: 1000;
-        }
-        .qty-box { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 10px; padding: 0 10px; }
-        .qty-btn { border: none; background: none; font-size: 1.5rem; padding: 5px 10px; cursor: pointer; }
-
-        .primary-btn {
-            flex: 1; background: #000; color: #fff; border: none;
-            padding: 18px; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer;
+        .confirm-btn {
+            width: 100%; background: #000; color: #fff; border: none;
+            padding: 20px; border-radius: 12px; font-weight: 800; font-size: 1.1rem;
+            cursor: pointer; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 10px;
         }
     </style>
 </head>
@@ -69,79 +76,92 @@
         <i class="fas fa-shopping-bag"></i>
     </nav>
 
-    <div class="product-container">
+    <div class="product-page">
         <img src="https://i.ibb.co/0V2N7xW/diesel-cap.jpg" class="product-img">
-        <h1 class="product-title">Diesel Classic Cap</h1>
-        <div class="price-box">
-            <span class="price-now">LE 350</span>
-            <span class="price-was">LE 500</span>
+        <h1 class="product-title">Diesel Black Cap</h1>
+        
+        <div class="price-row">
+            <span class="price-now">LE 350.00</span>
+            <span class="price-was">LE 500.00</span>
         </div>
-        <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">خامات مستوردة، تقفيل عالي الجودة، متاح بجميع الألوان.</p>
+        
+        <div style="border-top: 1px solid #eee; padding-top: 20px;">
+            <p style="color: #666; font-size: 0.95rem; line-height: 1.7;">
+                شنطة جلد طبيعي بتصميم القلب المميز، تناسب الخروجات الكاجوال والسواريه. خامات مستوردة وتقفيل عالي الجودة.
+            </p>
+        </div>
     </div>
 
-    <div class="footer-action">
-        <div class="qty-box">
-            <button class="qty-btn" onclick="updateQty(-1)">-</button>
-            <span id="main-qty" style="margin: 0 10px; font-weight: 700;">1</span>
-            <button class="qty-btn" onclick="updateQty(1)">+</button>
+    <div class="bottom-bar">
+        <div class="qty-input">
+            <button class="qty-btn" onclick="changeQty(-1)">-</button>
+            <span id="display-qty" style="margin: 0 12px; font-weight: 800;">1</span>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
         </div>
-        <button class="primary-btn" onclick="showCheckout()">إتمام الطلب | Buy Now 🛍️</button>
+        <button class="order-btn" onclick="openCheckout()">
+            <i class="fas fa-shopping-cart"></i> أضف للطلب
+        </button>
     </div>
 
-    <div class="checkout-overlay" id="checkoutOverlay">
-        <form class="checkout-sheet" action="https://formspree.io/f/xjgjkvqv" method="POST">
-            <div class="sheet-header">
-                <h3>بيانات التوصيل 🚚</h3>
-                <i class="fas fa-times" onclick="closeCheckout()" style="cursor:pointer; font-size:1.2rem;"></i>
+    <div class="checkout-modal" id="modal">
+        <form class="checkout-content" action="https://formspree.io/f/xjgjkvqv" method="POST">
+            <div class="modal-header">
+                <h3>تفاصيل الشحن 🚚</h3>
+                <i class="fas fa-times" onclick="closeCheckout()" style="cursor:pointer; font-size:1.5rem;"></i>
             </div>
 
-            <input type="hidden" name="Product" value="Diesel Classic Cap">
-            <input type="hidden" name="Price" value="350 LE">
+            <input type="hidden" name="Product" value="Diesel Black Cap">
+            <input type="hidden" name="Total Price" value="350 LE">
             <input type="hidden" name="Quantity" id="hidden-qty" value="1">
 
-            <div class="input-group">
+            <div class="input-box">
                 <label>الاسم بالكامل</label>
-                <input type="text" name="Name" placeholder="اكتب اسمك الثلاثي..." required>
+                <input type="text" name="Customer Name" placeholder="اكتب اسمك الثلاثي..." required>
             </div>
-            <div class="input-group">
+            
+            <div class="input-box">
                 <label>رقم الموبايل</label>
-                <input type="tel" name="Phone" placeholder="رقم متاح للاتصال..." required>
-            </div>
-            <div class="input-group">
-                <label>العنوان بالتفصيل</label>
-                <textarea name="Address" rows="3" placeholder="المحافظة - المنطقة - اسم الشارع" required></textarea>
+                <input type="tel" name="Phone Number" placeholder="رقم متاح للاتصال..." required>
             </div>
 
-            <button type="submit" class="primary-btn" style="width: 100%; margin-top: 10px;">تأكيد الأوردر | Confirm ✅</button>
+            <div class="input-box">
+                <label>العنوان بالتفصيل</label>
+                <textarea name="Shipping Address" rows="3" placeholder="المحافظة - المنطقة - اسم الشارع" required></textarea>
+            </div>
+
+            <button type="submit" class="confirm-btn">
+                تأكيد الطلب الآن <i class="fas fa-check-circle"></i>
+            </button>
         </form>
     </div>
 
     <script>
-        function updateQty(n) {
-            let q = document.getElementById('main-qty');
+        // تغيير الكمية
+        function changeQty(n) {
+            let d = document.getElementById('display-qty');
             let h = document.getElementById('hidden-qty');
-            let val = parseInt(q.innerText) + n;
+            let val = parseInt(d.innerText) + n;
             if(val < 1) val = 1;
-            q.innerText = val;
+            d.innerText = val;
             h.value = val;
         }
 
-        function showCheckout() {
-            document.getElementById('checkoutOverlay').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // منع السكرول
+        // فتح نافذة البيانات
+        function openCheckout() {
+            document.getElementById('modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // منع السكرول أثناء ملئ البيانات
         }
 
+        // إغلاق النافذة
         function closeCheckout() {
-            document.getElementById('checkoutOverlay').style.display = 'none';
+            document.getElementById('modal').style.display = 'none';
             document.body.style.overflow = 'auto';
         }
 
-        // غلق النافذة عند الضغط خارجها
-        window.onclick = function(event) {
-            let overlay = document.getElementById('checkoutOverlay');
-            if (event.target == overlay) {
-                closeCheckout();
-            }
+        // غلق النافذة عند الضغط خارج المربع الأبيض
+        window.onclick = function(e) {
+            let m = document.getElementById('modal');
+            if (e.target == m) closeCheckout();
         }
     </script>
 </body>
