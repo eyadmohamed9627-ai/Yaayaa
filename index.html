@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YAAYAA | Shopping System</title>
+    <title>YAAYAA | Bags Store ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -17,53 +17,51 @@
             padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; 
             background: white; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #eee;
         }
-        .cart-trigger { position: relative; cursor: pointer; font-size: 1.4rem; color: var(--dark); }
-        .badge { position: absolute; top: -5px; right: -8px; background: var(--brand); color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; }
+        .logo { font-weight: 900; font-size: 1.4rem; letter-spacing: 1px; }
+        .cart-trigger { position: relative; cursor: pointer; font-size: 1.4rem; }
+        .badge { position: absolute; top: -5px; right: -8px; background: #fb7185; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; }
 
-        /* شبكة المنتجات */
-        .products-container { padding: 15px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .card { background: white; border-radius: 15px; overflow: hidden; border: 1px solid #f0f0f0; }
-        .card img { width: 100%; height: 180px; object-fit: cover; }
-        .card-body { padding: 10px; text-align: center; }
+        /* شبكة المنتجات الرئيسية */
+        .container { padding: 15px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .card { background: white; border-radius: 15px; overflow: hidden; border: 1px solid #f0f0f0; cursor: pointer; }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-info { padding: 10px; text-align: center; }
+        .card-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 5px; }
         .card-price { color: var(--brand); font-weight: 900; }
 
-        /* نافذة تفاصيل المنتج (زي الصورة الأولى) */
-        .product-overlay {
+        /* صفحة تفاصيل المنتج (بتظهر لما تدوس عالشنطة) */
+        .product-page {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: white; z-index: 2000; display: none; flex-direction: column;
+            background: white; z-index: 2000; display: none; flex-direction: column; overflow-y: auto;
         }
-        .close-overlay { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; cursor: pointer; }
-        .p-image { width: 100%; height: 50vh; object-fit: cover; }
-        .p-details { padding: 20px; }
+        .close-page { position: absolute; top: 20px; right: 20px; background: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); cursor: pointer; }
+        .main-img { width: 100%; height: 55vh; object-fit: cover; }
+        .details-box { padding: 25px; }
         .p-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; }
-        .p-prices { margin-bottom: 20px; font-size: 1.4rem; }
-        .old-p { text-decoration: line-through; color: #ccc; margin-left: 10px; }
+        .p-price-row { margin-bottom: 20px; }
+        .p-now { color: var(--brand); font-weight: 900; font-size: 1.5rem; }
+        .p-was { text-decoration: line-through; color: #ccc; margin-left: 10px; }
+        .desc-title { font-weight: 700; margin-bottom: 8px; display: block; }
+        .desc-text { color: #666; font-size: 0.95rem; line-height: 1.6; }
 
-        /* شريط الإضافة للسلة السفلي */
-        .action-bar {
+        /* البار السفلي للإضافة للسلة */
+        .bottom-actions {
             position: fixed; bottom: 0; left: 0; width: 100%; background: white;
-            padding: 20px; display: flex; gap: 10px; border-top: 1px solid #eee;
+            padding: 15px 20px; display: flex; gap: 12px; border-top: 1px solid #eee; z-index: 2100;
         }
-        .qty-selector { display: flex; align-items: center; border: 1px solid #eee; border-radius: 10px; padding: 0 10px; }
-        .qty-btn { border: none; background: none; font-size: 1.2rem; padding: 5px 10px; cursor: pointer; }
-        .add-btn { flex: 1; background: var(--dark); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+        .qty-control { display: flex; align-items: center; border: 1px solid #eee; border-radius: 12px; padding: 0 10px; }
+        .qty-btn { border: none; background: none; font-size: 1.3rem; padding: 5px 10px; cursor: pointer; color: var(--brand); }
+        .add-cart-btn { flex: 1; background: var(--dark); color: white; border: none; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* السلة (زي الصورة الثانية والثالثة) */
-        .cart-overlay {
+        /* السلة والفورم (بتظهر لما تدوس على أيقونة الشنطة فوق) */
+        .cart-page {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #fafafa; z-index: 3000; display: none; flex-direction: column; overflow-y: auto;
         }
-        .cart-content { padding: 20px; }
-        .cart-item { display: flex; gap: 15px; background: white; padding: 10px; border-radius: 15px; margin-bottom: 10px; align-items: center; }
-        .cart-item img { width: 60px; height: 60px; border-radius: 10px; }
-
-        .form-section { background: white; padding: 25px; border-radius: 20px; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
-        .form-section h3 { margin-bottom: 20px; text-align: center; }
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; margin-bottom: 5px; font-weight: 700; font-size: 0.9rem; }
-        .input-group input { width: 100%; padding: 15px; border: 1px solid #eee; border-radius: 12px; background: #fdfdfd; outline: none; }
-
-        .confirm-btn { width: 100%; padding: 18px; background: var(--dark); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; }
+        .cart-item { display: flex; gap: 15px; background: white; padding: 12px; border-radius: 15px; margin: 15px; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+        .cart-item img { width: 70px; height: 70px; border-radius: 12px; object-fit: cover; }
+        .form-card { background: white; padding: 25px; border-radius: 20px; margin: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); }
+        .input-box { width: 100%; padding: 16px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 12px; outline: none; background: #fdfdfd; }
     </style>
 </head>
 <body>
@@ -76,138 +74,131 @@
         </div>
     </nav>
 
-    <div class="products-container" id="grid"></div>
+    <div class="container" id="mainGrid"></div>
 
-    <div class="product-overlay" id="pOverlay">
-        <i class="fas fa-times close-overlay" onclick="closeProduct()"></i>
-        <img src="" id="pImg" class="p-image">
-        <div class="p-details">
-            <h2 id="pTitle" class="p-title"></h2>
-            <div class="p-prices">
-                <span id="pPrice" style="color:var(--brand); font-weight:900;"></span>
-                <span id="pOld" class="old-p"></span>
+    <div class="product-page" id="productPage">
+        <div class="close-page" onclick="closeProduct()"><i class="fas fa-times"></i></div>
+        <img src="" id="detailsImg" class="main-img">
+        <div class="details-box">
+            <h1 id="detailsName" class="p-title"></h1>
+            <div class="p-price-row">
+                <span id="detailsPrice" class="p-now"></span>
+                <span id="detailsOld" class="p-was"></span>
             </div>
-            <p style="color:#666; font-size:0.9rem;">تفاصيل الشنطة: جلد طبيعي بتصميم مميز، تناسب جميع الخروجات.</p>
+            <span class="desc-title">تفاصيل الشنطة:</span>
+            <p id="detailsDesc" class="desc-text"></p>
         </div>
-        <div class="action-bar">
-            <div class="qty-selector">
-                <button class="qty-btn" onclick="changeQty(-1)">-</button>
-                <span id="qtyVal" style="font-weight:700; margin:0 10px;">1</span>
-                <button class="qty-btn" onclick="changeQty(1)">+</button>
+        <div class="bottom-actions">
+            <div class="qty-control">
+                <button class="qty-btn" onclick="updateQty(-1)">-</button>
+                <span id="qtyNum" style="font-weight:900; margin:0 10px;">1</span>
+                <button class="qty-btn" onclick="updateQty(1)">+</button>
             </div>
-            <button class="add-btn" onclick="addToCart()">🛍️ إتمام الطلب الآن</button>
+            <button class="add-cart-btn" onclick="addToCart()">🛍️ أضف إلى السلة</button>
         </div>
     </div>
 
-    <div class="cart-overlay" id="cartOverlay">
-        <div class="navbar" style="position:static;">
-            <h3>سلة المشتريات ✨</h3>
-            <i class="fas fa-times" onclick="closeCart()" style="cursor:pointer;"></i>
+    <div class="cart-page" id="cartPage">
+        <div class="navbar">
+            <h3 style="flex:1; text-align:center;">سلة المشتريات ✨</h3>
+            <i class="fas fa-times" onclick="closeCart()" style="cursor:pointer; font-size:1.2rem;"></i>
         </div>
         
-        <div class="cart-content">
-            <div id="cartItemsList"></div>
+        <div id="cartList"></div>
 
-            <form action="https://formspree.io/f/xjgjkvqv" method="POST" class="form-section">
-                <h3>بيانات التوصيل ✨🚚</h3>
-                <input type="hidden" name="الطلبات" id="hiddenCartData">
-                <input type="hidden" name="الإجمالي" id="hiddenTotal">
-
-                <div class="input-group">
-                    <label>الاسم بالكامل</label>
-                    <input type="text" name="الاسم" placeholder="اكتب اسمك الثلاثي..." required>
-                </div>
-                <div class="input-group">
-                    <label>رقم الموبايل</label>
-                    <input type="tel" name="الموبايل" placeholder="رقم متاح للاتصال..." required>
-                </div>
-                <div class="input-group">
-                    <label>العنوان بالتفصيل</label>
-                    <input type="text" name="العنوان" placeholder="المحافظة - المنطقة - اسم الشارع" required>
-                </div>
-
-                <button type="submit" class="confirm-btn">تأكيد الطلب | Confirm 🛍️</button>
-            </form>
-        </div>
+        <form action="https://formspree.io/f/xjgjkvqv" method="POST" class="form-card">
+            <h3 style="margin-bottom:20px; text-align:center;">بيانات التوصيل 🚚</h3>
+            <input type="hidden" name="الطلبات" id="hiddenItems">
+            <input type="hidden" name="إجمالي السعر" id="hiddenTotal">
+            
+            <input type="text" name="الاسم" class="input-box" placeholder="الاسم بالكامل" required>
+            <input type="tel" name="الموبايل" class="input-box" placeholder="رقم الموبايل" required>
+            <textarea name="العنوان" class="input-box" rows="3" placeholder="العنوان بالتفصيل (محافظة - منطقة - شارع)" required></textarea>
+            
+            <button type="submit" class="add-cart-btn" style="width:100%; padding:18px;">تأكيد الطلب | Confirm ✅</button>
+        </form>
     </div>
 
     <script>
         const bags = [
-            { id: 1, name: "قلب روان", price: 850, old: 1100, img: "https://i.ibb.co/PsNk8D6b/IMG-1874.jpg" },
-            { id: 2, name: "كوتش نود", price: 1200, old: 1500, img: "https://i.ibb.co/PsNk8D6b/IMG-1874.jpg" }
+            { id: 1, name: "Coach Nude Bag", price: 1250, old: 1800, img: "https://i.ibb.co/PsNk8D6b/IMG-1874.jpg", desc: "شنطة كوتش نود بخامات مستوردة وتقفيل عالي الجودة، تناسب الخروجات الكاجوال والسواريه." },
+            { id: 2, name: "Chanel Classic", price: 1600, old: 2100, img: "https://i.ibb.co/3c3M6xX/chanel-cap.jpg", desc: "شانيل كلاسيك بتصميم القلب المميز، جلد طبيعي ناعم جداً وإكسسوارات غير قابلة للصدأ." },
+            { id: 3, name: "Prada Edition", price: 1100, old: 1500, img: "https://i.ibb.co/0V2N7xW/diesel-cap.jpg", desc: "إصدار برادا المحدود، لون مميز وتصميم عصري يناسب البنات الجامعيين." },
+            { id: 4, name: "Dior Saddle", price: 1400, old: 1950, img: "https://i.ibb.co/1Kk7L6x/dior-set.jpg", desc: "ديور سادل الشهيرة، أناقة لا تنتهي مع حزام طويل قابل للتعديل." }
         ];
 
         let cart = [];
-        let currentBag = null;
+        let tempItem = null;
 
         function render() {
-            const grid = document.getElementById('grid');
+            const grid = document.getElementById('mainGrid');
             grid.innerHTML = bags.map(b => `
-                <div class="card" onclick="openProduct(${b.id})">
+                <div class="card" onclick="viewProduct(${b.id})">
                     <img src="${b.img}">
-                    <div class="card-body">
-                        <div>${b.name}</div>
+                    <div class="card-info">
+                        <div class="card-name">${b.name}</div>
                         <div class="card-price">LE ${b.price}</div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function openProduct(id) {
-            currentBag = bags.find(b => b.id === id);
-            document.getElementById('pImg').src = currentBag.img;
-            document.getElementById('pTitle').innerText = currentBag.name;
-            document.getElementById('pPrice').innerText = "LE " + currentBag.price;
-            document.getElementById('pOld').innerText = "LE " + currentBag.old;
-            document.getElementById('qtyVal').innerText = 1;
-            document.getElementById('pOverlay').style.display = 'flex';
+        function viewProduct(id) {
+            tempItem = bags.find(b => b.id === id);
+            document.getElementById('detailsImg').src = tempItem.img;
+            document.getElementById('detailsName').innerText = tempItem.name;
+            document.getElementById('detailsPrice').innerText = "LE " + tempItem.price;
+            document.getElementById('detailsOld').innerText = "LE " + tempItem.old;
+            document.getElementById('detailsDesc').innerText = tempItem.desc;
+            document.getElementById('qtyNum').innerText = 1;
+            document.getElementById('productPage').style.display = 'flex';
         }
 
-        function closeProduct() { document.getElementById('pOverlay').style.display = 'none'; }
+        function closeProduct() { document.getElementById('productPage').style.display = 'none'; }
 
-        function changeQty(n) {
-            let q = document.getElementById('qtyVal');
+        function updateQty(n) {
+            let q = document.getElementById('qtyNum');
             let val = parseInt(q.innerText) + n;
             if(val > 0) q.innerText = val;
         }
 
         function addToCart() {
-            const qty = parseInt(document.getElementById('qtyVal').innerText);
-            cart.push({ ...currentBag, qty });
+            const qty = parseInt(document.getElementById('qtyNum').innerText);
+            cart.push({ ...tempItem, qty });
             updateCart();
             closeProduct();
-            openCart(); // بيفتح السلة تلقائياً بعد الإضافة
+            alert("تمت إضافة " + tempItem.name + " إلى سلتك ✅");
         }
 
-        function openCart() { document.getElementById('cartOverlay').style.display = 'flex'; }
-        function closeCart() { document.getElementById('cartOverlay').style.display = 'none'; }
+        function openCart() { document.getElementById('cartPage').style.display = 'flex'; }
+        function closeCart() { document.getElementById('cartPage').style.display = 'none'; }
 
         function updateCart() {
             document.getElementById('cartCount').innerText = cart.length;
-            const list = document.getElementById('cartItemsList');
+            const list = document.getElementById('cartList');
             let total = 0;
-            let summary = "";
+            let text = "";
 
             list.innerHTML = cart.map((item, index) => {
                 total += (item.price * item.qty);
-                summary += `${item.name} (عدد ${item.qty}), `;
+                text += `${item.name} (${item.qty}), `;
                 return `
                     <div class="cart-item">
                         <img src="${item.img}">
                         <div style="flex:1">
-                            <div style="font-weight:900">${item.name}</div>
-                            <div style="color:var(--brand)">${item.qty} x ${item.price} LE</div>
+                            <div style="font-weight:700">${item.name}</div>
+                            <div style="color:var(--brand); font-weight:900;">${item.qty} x ${item.price} LE</div>
                         </div>
-                        <i class="fas fa-trash" onclick="removeItem(${index})" style="color:#ff4d4d"></i>
+                        <i class="fas fa-trash-alt" onclick="remove(${index})" style="color:#ff5e5e; cursor:pointer;"></i>
                     </div>
                 `;
             }).join('');
 
-            document.getElementById('hiddenCartData').value = summary;
+            document.getElementById('hiddenItems').value = text;
             document.getElementById('hiddenTotal').value = total + " LE";
         }
 
-        function removeItem(i) { cart.splice(i, 1); updateCart(); }
+        function remove(i) { cart.splice(i, 1); updateCart(); }
 
         render();
     </script>
