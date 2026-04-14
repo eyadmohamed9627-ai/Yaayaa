@@ -6,7 +6,9 @@
     <title>Yaayaa Bags - Girl Boss Vibes ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
+        /* التنسيقات (CSS) */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
@@ -100,19 +102,41 @@
     </div>
 
     <script>
+        /* كود الـ JavaScript مدموج هنا */
+
+        // 1. مصفوفة المنتجات (حط لينكات ImgBB هنا)
         const products = [
-            { id: 1, name: "شنطة بينك فيبز", price: 850, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1000" },
-            { id: 2, name: "شنطة جولد تشين", price: 1200, image: "https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1000" },
-            { id: 3, name: "شنطة كلاسيك سوداء", price: 950, image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=1000" }
+            { 
+                id: 1, 
+                name: "شنطة بينك فيبز", 
+                price: 850, 
+                image: "https://i.ibb.co/pBZDnz3m/IMG-1855.jpg" 
+            },
+            { 
+                id: 2, 
+                name: "شنطة جولد تشين", 
+                price: 1200, 
+                image: "https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1000" 
+            },
+            { 
+                id: 3, 
+                name: "شنطة كلاسيك سوداء", 
+                price: 950, 
+                image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=1000" 
+            }
         ];
 
         let cart = [];
 
+        // 2. دالة عرض المنتجات في الصفحة
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
+            if(!grid) return;
             grid.innerHTML = products.map(p => `
                 <div class="product-card">
-                    <div class="product-image"><img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300?text=Image+Coming+Soon'"></div>
+                    <div class="product-image">
+                        <img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300?text=Image+Error'">
+                    </div>
                     <div class="product-info">
                         <h3 class="product-title">${p.name}</h3>
                         <div class="product-price">${p.price} ج.م</div>
@@ -122,6 +146,7 @@
             `).join('');
         }
 
+        // 3. دالة إضافة منتج للسلة
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             cart.push(product);
@@ -129,35 +154,52 @@
             alert('تمت الإضافة للشنطة! ✨');
         }
 
-        function toggleCart() { document.getElementById('cart').classList.toggle('open'); }
+        // 4. فتح وقفل السلة
+        function toggleCart() { 
+            document.getElementById('cart').classList.toggle('open'); 
+        }
 
+        // 5. تحديث شكل السلة والبيانات
         function updateCart() {
             const itemsDiv = document.getElementById('cartItems');
             const totalSpan = document.getElementById('cartTotal');
+            
             if (cart.length === 0) {
                 itemsDiv.innerHTML = '<p style="text-align:center;">السلة فاضية 😢</p>';
                 totalSpan.innerText = '0';
                 return;
             }
+
             itemsDiv.innerHTML = cart.map((item, index) => `
                 <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem;">
                     <span>${item.name}</span>
                     <span>${item.price} ج.م <i class="fas fa-trash" onclick="removeItem(${index})" style="color:red; cursor:pointer; margin-right:10px;"></i></span>
                 </div>
             `).join('');
+
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             totalSpan.innerText = total;
+
+            // تحديث الحقول المخفية للفورم
             document.getElementById('formOrderDetails').value = cart.map(i => i.name).join(' - ');
             document.getElementById('formTotal').value = total + " EGP";
         }
 
-        function removeItem(index) { cart.splice(index, 1); updateCart(); }
+        function removeItem(index) { 
+            cart.splice(index, 1); 
+            updateCart(); 
+        }
 
+        // عند الإرسال
         document.getElementById('orderForm').onsubmit = function() {
-            if (cart.length === 0) { alert('الشنطة فاضية!'); return false; }
-            alert('تم استلام طلبك! هنكلمك فوراً لتأكيد الأوردر 💖');
+            if (cart.length === 0) { 
+                alert('الشنطة فاضية!'); 
+                return false; 
+            }
+            // الفورم هتتبعت لـ Formspree أوتوماتيك
         };
 
+        // تشغيل العرض أول ما الصفحة تفتح
         renderProducts();
     </script>
 </body>
