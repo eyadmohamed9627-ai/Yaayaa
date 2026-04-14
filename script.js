@@ -4,7 +4,7 @@ const products = [
         id: 1,
         name: "شنطة بينك فيبز", 
         price: 850, 
-        image: "https://i.ibb.co/example/pink.jpg" // حط لينك صورتك هنا
+        image: "https://i.ibb.co/pBZDnz3m/IMG-1855.jpg" // حط لينك صورتك هنا
     },
     {
         id: 2,
