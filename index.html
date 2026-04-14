@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* المتغيرات الأساسية للألوان */
         :root {
             --primary-pink: #ff6b9d;
             --dark-pink: #c44569;
@@ -16,279 +15,195 @@
             --black-accent: #1a1a1a;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, var(--soft-pink) 50%, #ffffff 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { background: var(--soft-pink); color: #333; overflow-x: hidden; }
 
         /* الهيدر */
-        .header {
-            text-align: center; padding: 40px 0; background: rgba(255,255,255,0.8);
-            backdrop-filter: blur(10px); border-radius: 30px; margin: 20px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        .logo {
-            font-size: 3rem; background: linear-gradient(45deg, var(--primary-pink), var(--dark-pink));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-weight: 700; margin-bottom: 10px;
-        }
+        .header { text-align: center; padding: 30px; background: white; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .logo { font-size: 2.5rem; font-weight: 700; color: var(--dark-pink); }
 
         /* شبكة المنتجات */
-        .products-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; padding: 20px 0;
-        }
-        .product-card {
-            background: white; border-radius: 20px; overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.4s;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .product-image { width: 100%; height: 320px; overflow: hidden; }
-        .product-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .product-card:hover .product-image img { scale: 1.1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 15px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
         
-        .product-info { padding: 20px; text-align: center; }
-        .product-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
-        .product-price { font-size: 1.3rem; color: var(--dark-pink); font-weight: 700; margin-bottom: 15px; }
-        .add-to-cart-btn {
-            width: 100%; padding: 12px; background: var(--black-accent);
-            color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600;
-            transition: 0.3s;
+        .product-card { 
+            background: white; border-radius: 20px; overflow: hidden; 
+            cursor: pointer; transition: 0.3s; position: relative;
         }
-        .add-to-cart-btn:hover { background: var(--dark-pink); }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-image { height: 300px; width: 100%; object-fit: cover; }
+        .product-info { padding: 15px; text-align: center; }
+        .product-title { font-weight: 600; font-size: 1.2rem; color: var(--dark-pink); }
+        .product-price { font-weight: 700; font-size: 1.1rem; margin: 5px 0; }
 
-        /* السلة الجانبية (نفس استايل Diesel) */
-        .cart-overlay {
+        /* صفحة تفاصيل المنتج (زي صورة ديزل) */
+        .product-details-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); visibility: hidden; opacity: 0;
-            transition: 0.3s; z-index: 1999;
+            background: white; z-index: 3000; display: none; overflow-y: auto;
+            animation: slideUp 0.4s ease-out;
         }
-        .cart-overlay.active { visibility: visible; opacity: 1; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        .cart-sidebar {
-            position: fixed; top: 0; left: 0; height: 100%; width: 400px;
-            max-width: 85%; background: white; z-index: 2000; padding: 25px;
-            box-shadow: 5px 0 30px rgba(0,0,0,0.2);
-            transform: translateX(-100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column;
-        }
-        .cart-sidebar.open { transform: translateX(0); }
-
-        .cart-header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding-bottom: 20px; border-bottom: 1px solid #eee; margin-bottom: 20px;
-        }
-
-        .cart-items-container { flex: 1; overflow-y: auto; padding-right: 5px; }
+        .details-container { max-width: 600px; margin: 0 auto; padding-bottom: 100px; }
+        .back-btn { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; cursor: pointer; z-index: 10; background: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         
-        /* شكل المنتج جوه السلة */
-        .cart-item {
-            display: flex; gap: 15px; margin-bottom: 20px; align-items: center;
-            animation: fadeIn 0.3s ease;
-        }
-        .cart-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 12px; }
-        .cart-item-details { flex: 1; }
-        .cart-item-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
-        .cart-item-price { color: var(--dark-pink); font-weight: 700; font-size: 1rem; }
+        .details-image { width: 100%; height: 450px; object-fit: cover; }
+        .details-content { padding: 25px; }
+        .details-title { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
+        .details-price { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
+        .details-price span { color: #999; text-decoration: line-through; font-size: 1.1rem; margin-right: 10px; }
+        .details-desc { line-height: 1.6; color: #666; margin-bottom: 30px; border-top: 1px solid #eee; padding-top: 20px; }
 
-        .cart-footer { padding-top: 20px; border-top: 1px solid #eee; }
-        .cart-total {
-            display: flex; justify-content: space-between; font-size: 1.2rem;
-            font-weight: 700; margin-bottom: 20px;
+        /* أزرار التحكم السفلى */
+        .bottom-actions {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: white;
+            padding: 15px; display: flex; gap: 10px; box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
         }
+        .qty-input { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 10px; padding: 0 15px; }
+        .add-to-cart-big { flex: 1; background: black; color: white; border: none; padding: 18px; border-radius: 10px; font-weight: 700; cursor: pointer; }
 
-        .checkout-btn {
-            width: 100%; padding: 18px; background: var(--black-accent);
-            color: white; border: none; border-radius: 15px; cursor: pointer;
-            font-weight: 700; font-size: 1.1rem; transition: 0.3s;
-        }
-        .checkout-btn:hover { background: var(--dark-pink); }
-
-        /* زرار السلة العايم */
-        .cart-toggle-btn {
-            position: fixed; top: 25px; left: 25px; width: 60px; height: 60px;
-            background: var(--dark-pink); border: none; border-radius: 50%;
-            color: white; font-size: 1.4rem; cursor: pointer; z-index: 1000;
-            box-shadow: 0 10px 20px rgba(196, 69, 105, 0.3);
-        }
-
-        /* الفورم */
-        .order-form { display: none; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .order-form input {
-            padding: 12px; border: 1px solid #ddd; border-radius: 10px; outline: none;
-            font-family: inherit; text-align: right;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* السلة الجانبية */
+        .cart-sidebar { position: fixed; top: 0; left: -100%; width: 350px; height: 100%; background: white; z-index: 4000; transition: 0.4s; padding: 20px; box-shadow: 5px 0 20px rgba(0,0,0,0.1); }
+        .cart-sidebar.open { left: 0; }
+        .cart-item { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .cart-item img { width: 60px; height: 60px; border-radius: 10px; }
+        
+        .cart-toggle { position: fixed; top: 20px; left: 20px; background: var(--dark-pink); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
 
-    <button class="cart-toggle-btn" onclick="toggleCart()">
-        <i class="fas fa-shopping-bag"></i>
-    </button>
-
-    <div class="cart-overlay" id="overlay" onclick="toggleCart()"></div>
+    <div class="cart-toggle" onclick="toggleCart()"><i class="fas fa-shopping-bag"></i></div>
 
     <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
             <h3>شنطتك ✨</h3>
-            <button onclick="toggleCart()" style="border:none; background:none; font-size: 1.8rem; cursor:pointer;">&times;</button>
+            <span onclick="toggleCart()" style="cursor:pointer; font-size:1.5rem;">&times;</span>
         </div>
+        <div id="cartItems"></div>
+        <div style="margin-top:20px; font-weight:700;">الإجمالي: <span id="cartTotal">0</span> ج.م</div>
+        <button onclick="alert('سيتم تحويلك للدفع')" class="add-to-cart-big" style="width:100%; margin-top:20px;">دفع</button>
+    </div>
 
-        <div class="cart-items-container" id="cartItems">
+    <div class="product-details-overlay" id="productPage">
+        <div class="back-btn" onclick="closeProduct()">&times;</div>
+        <div class="details-container">
+            <img src="" id="d-image" class="details-image">
+            <div class="details-content">
+                <h1 id="d-title" class="details-title"></h1>
+                <div class="details-price">
+                    <span id="d-old-price"></span>
+                    LE <span id="d-price"></span>
+                </div>
+                <div class="details-desc">
+                    <h4>تفاصيل الشنطة:</h4>
+                    <p id="d-desc"></p>
+                </div>
             </div>
-
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>الإجمالي:</span>
-                <span><span id="cartTotal">0</span> ج.م</span>
+        </div>
+        <div class="bottom-actions">
+            <div class="qty-input">
+                <button style="border:none; background:none; font-size:1.2rem;">-</button>
+                <span style="margin: 0 15px;">1</span>
+                <button style="border:none; background:none; font-size:1.2rem;">+</button>
             </div>
-            
-            <button class="checkout-btn" id="mainCheckoutBtn" onclick="showForm()">إتمام الطلب 🚀</button>
-
-            <form id="orderForm" action="https://formspree.io/f/xjgjkvqv" method="POST" class="order-form">
-                <input type="text" name="الاسم" placeholder="الاسم بالكامل" required>
-                <input type="tel" name="الموبايل" placeholder="رقم الموبايل" required>
-                <input type="text" name="العنوان" placeholder="المحافظة / العنوان بالتفصيل" required>
-                <input type="hidden" name="الطلبات" id="formOrderDetails">
-                <input type="hidden" name="الاجمالي" id="formTotal">
-                <button type="submit" class="checkout-btn" style="background:#00b894; margin-top:10px;">تأكيد الإرسال</button>
-            </form>
+            <button class="add-to-cart-big" id="addBtnAction">Add to cart 🛍️</button>
         </div>
     </div>
 
     <div class="container">
         <header class="header">
             <h1 class="logo">Yaayaa Bags</h1>
-            <p>أشيك شنط لأحلى بنوتات في مصر ✨</p>
         </header>
-
-        <div class="products-grid" id="productsGrid">
-            </div>
+        <div class="products-grid" id="productsGrid"></div>
     </div>
 
     <script>
-        // 1. مصفوفة المنتجات
         const products = [
-            { id: 1, name: "شنطة قلب روان ✨", price: 850, image: "https://i.ibb.co/bjpkyqTT/IMG-1855.jpg" },
-            { id: 2, name: "شنطة Coach أوريجينال", price: 1200, image: "https://i.ibb.co/PsNk8D6b/IMG-1874.jpg" },
-            { id: 3, name: "كاب ديزل Black Edition", price: 350, image: "https://i.ibb.co/0V2N7xW/diesel-cap.jpg" }
+            { 
+                id: 1, 
+                name: "قلب روان", 
+                price: 850, 
+                oldPrice: 1100,
+                image: "https://i.ibb.co/bjpkyqTT/IMG-1855.jpg",
+                desc: "شنطة جلد طبيعي بتصميم القلب المميز، تناسب الخروجات الكاجوال والسواريه. خامات مستوردة وتقفيل عالي الجودة."
+            },
+            { 
+                id: 2, 
+                name: "Coach Bag", 
+                price: 1200, 
+                oldPrice: 1500,
+                image: "https://i.ibb.co/PsNk8D6b/IMG-1874.jpg",
+                desc: "شنطة كوتش الجديدة كلياً، مساحة واسعة من الداخل، يد طويلة قابلة للتعديل، متوفرة بألوان الصيف الجذابة."
+            }
         ];
 
         let cart = [];
 
-        // 2. عرض المنتجات
         function renderProducts() {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = products.map(p => `
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="${p.image}" alt="${p.name}">
-                    </div>
+                <div class="product-card" onclick="openProduct(${p.id})">
+                    <img src="${p.image}" class="product-image">
                     <div class="product-info">
                         <h3 class="product-title">${p.name}</h3>
-                        <div class="product-price">${p.price} ج.م</div>
-                        <button class="add-to-cart-btn" onclick="addToCart(${p.id})">أضيفي للشنطة 🛍️</button>
+                        <div class="product-price">LE ${p.price}</div>
+                        <div style="color:var(--dark-pink); font-size:0.8rem;">إضغطي للتفاصيل ✨</div>
                     </div>
                 </div>
             `).join('');
         }
 
-        // 3. إضافة للسلة
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            cart.push(product);
-            updateCart();
-            // فتح السلة تلقائياً عند الإضافة (زي ديزل)
-            if(!document.getElementById('cartSidebar').classList.contains('open')) {
-                toggleCart();
-            }
+        // فتح صفحة المنتج
+        function openProduct(id) {
+            const p = products.find(x => x.id === id);
+            document.getElementById('d-image').src = p.image;
+            document.getElementById('d-title').innerText = p.name;
+            document.getElementById('d-price').innerText = p.price;
+            document.getElementById('d-old-price').innerText = p.oldPrice + " LE";
+            document.getElementById('d-desc').innerText = p.desc;
+            
+            document.getElementById('addBtnAction').onclick = () => {
+                addToCart(p.id);
+                closeProduct();
+            };
+
+            document.getElementById('productPage').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // منع السكرول في الصفحة الأساسية
         }
 
-        // 4. فتح وقفل السلة
+        function closeProduct() {
+            document.getElementById('productPage').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function addToCart(id) {
+            const p = products.find(x => x.id === id);
+            cart.push(p);
+            updateCart();
+            toggleCart();
+        }
+
         function toggleCart() {
             document.getElementById('cartSidebar').classList.toggle('open');
-            document.getElementById('overlay').classList.toggle('active');
         }
 
-        // 5. إظهار فورم البيانات
-        function showForm() {
-            if(cart.length === 0) return alert('السلة فاضية!');
-            document.getElementById('orderForm').style.display = 'flex';
-            document.getElementById('mainCheckoutBtn').style.display = 'none';
-        }
-
-        // 6. تحديث السلة
         function updateCart() {
-            const itemsDiv = document.getElementById('cartItems');
-            const totalSpan = document.getElementById('cartTotal');
-            
-            if (cart.length === 0) {
-                itemsDiv.innerHTML = '<div style="text-align:center; padding-top:50px; color:#999;">الشنطة فاضية حالياً 😢</div>';
-                totalSpan.innerText = '0';
-                return;
-            }
-
-            itemsDiv.innerHTML = cart.map((item, index) => `
+            const items = document.getElementById('cartItems');
+            items.innerHTML = cart.map((item, index) => `
                 <div class="cart-item">
                     <img src="${item.image}">
-                    <div class="cart-item-details">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">${item.price} ج.م</div>
+                    <div>
+                        <div style="font-weight:600">${item.name}</div>
+                        <div style="color:var(--dark-pink)">${item.price} ج.م</div>
                     </div>
-                    <i class="fas fa-trash-alt" onclick="removeItem(${index})" style="color:#ff7675; cursor:pointer;"></i>
                 </div>
             `).join('');
-
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
-            totalSpan.innerText = total;
-
-            document.getElementById('formOrderDetails').value = cart.map(i => i.name).join(' - ');
-            document.getElementById('formTotal').value = total + " EGP";
+            
+            const total = cart.reduce((s, i) => s + i.price, 0);
+            document.getElementById('cartTotal').innerText = total;
         }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            updateCart();
-        }
-
-        // 7. معالجة إرسال الطلب (بدون مغادرة الصفحة)
-        document.getElementById('orderForm').onsubmit = async function(e) {
-            e.preventDefault();
-            const btn = this.querySelector('button[type="submit"]');
-            btn.innerText = "جاري الحجز... ✨";
-            btn.disabled = true;
-
-            try {
-                const response = await fetch(this.action, {
-                    method: 'POST',
-                    body: new FormData(this),
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    alert('تم استلام طلبك يا فنانة! هنكلمك فوراً 😍');
-                    cart = [];
-                    updateCart();
-                    toggleCart();
-                    this.reset();
-                    document.getElementById('orderForm').style.display = 'none';
-                    document.getElementById('mainCheckoutBtn').style.display = 'block';
-                }
-            } catch (err) {
-                alert('حصل مشكلة في الاتصال، حاولي تاني');
-            } finally {
-                btn.innerText = "تأكيد الإرسال";
-                btn.disabled = false;
-            }
-        };
 
         renderProducts();
     </script>
