@@ -3,67 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YAAYAA STORE | Checkout</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>Yaayaa Store | Girl Boss Vibes ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: #fff; color: #000; overflow-x: hidden; }
+        /* المتغيرات الأساسية للألوان البناتية */
+        :root {
+            --primary-pink: #ff6b9d; /* بينك فاتح وشيك */
+            --soft-pink: #fecfef; /* بينك هادي جداً للخلفيات */
+            --dark-pink: #c44569; /* بينك غامق للنصوص والأسعار */
+            --bg: #ffffff;
+            --text-muted: #888888;
+        }
 
-        /* الهيدر */
-        .navbar { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: #fff; z-index: 1000; }
-        .logo { font-weight: 800; font-size: 1.3rem; letter-spacing: 1px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { 
+            background-color: #fdf2f8; /* خلفية بينك هادية جداً مريحة للعين */
+            color: #1a1a1a; 
+            overflow-x: hidden; 
+        }
+
+        /* الهيدر البناتي الشيك */
+        .navbar { 
+            padding: 15px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px); /* تأثير ضبابي عصري */
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.1);
+        }
+        .logo { 
+            font-weight: 700; 
+            font-size: 1.4rem; 
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            -webkit-background-clip: text; /* الاسم بـ Gradient */
+            -webkit-text-fill-color: transparent;
+            text-decoration: none; 
+        }
 
         /* منطقة المنتج */
-        .product-page { padding: 20px; max-width: 600px; margin: 0 auto; }
-        .product-img { width: 100%; border-radius: 15px; margin-bottom: 20px; }
-        .product-title { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
+        .product-page { 
+            padding: 20px; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            animation: fadeIn 0.4s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .product-img { 
+            width: 100%; 
+            border-radius: 20px; /* حواف دائرية البناتية */
+            margin-bottom: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .product-title { font-size: 1.7rem; font-weight: 700; margin-bottom: 8px; color: #1a1a1a; }
         
         .price-row { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
-        .price-now { font-size: 2rem; font-weight: 800; }
-        .price-was { color: #bbb; text-decoration: line-through; font-size: 1.2rem; }
+        .price-now { font-size: 2.1rem; font-weight: 800; color: var(--dark-pink); } /* السعر بلون بينك غامق شيك */
+        .price-was { color: var(--text-muted); text-decoration: line-through; font-size: 1.2rem; }
 
-        /* البار السفلي - المرحلة 1: اختيار الكمية والطلب */
+        /* البار السفلي - أول خطوة */
         .bottom-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: #fff;
-            padding: 20px; border-top: 1px solid #eee; display: flex; gap: 12px; z-index: 900;
+            position: fixed; bottom: 0; left: 0; width: 100%; background: white;
+            padding: 20px; display: flex; gap: 12px; z-index: 900;
+            box-shadow: 0 -10px 25px rgba(255, 107, 157, 0.1);
         }
-        .qty-input { display: flex; align-items: center; border: 1.5px solid #000; border-radius: 12px; padding: 0 15px; }
-        .qty-btn { border: none; background: none; font-size: 1.5rem; padding: 5px 10px; cursor: pointer; }
+        .qty-input { display: flex; align-items: center; border: 1px solid #ddd; border-radius: 15px; padding: 0 15px; background: #fff; }
+        .qty-btn { border: none; background: none; font-size: 1.5rem; padding: 5px 10px; cursor: pointer; color: var(--dark-pink); }
 
         .order-btn {
-            flex: 1; background: #000; color: #fff; border: none;
-            border-radius: 12px; font-weight: 700; font-size: 1.1rem; cursor: pointer;
+            flex: 1; background: linear-gradient(45deg, #ff6b9d, #c44569); /* زرار طلب بـ Gradient */
+            color: white; border: none;
+            border-radius: 15px; font-weight: 700; font-size: 1.1rem; cursor: pointer;
+            transition: 0.3s;
         }
+        .order-btn:hover { opacity: 0.9; transform: scale(0.98); }
 
-        /* نافذة بيانات الشحن - المرحلة 2: تظهر بعد الضغط على طلب */
+        /* نافذة بيانات الشحن البناتية */
         .checkout-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 2000; display: none;
+            background: rgba(0,0,0,0.5); z-index: 2000; display: none;
             justify-content: center; align-items: flex-end;
         }
         .checkout-content {
-            background: #fff; width: 100%; max-width: 500px;
+            background: white; width: 100%; max-width: 500px;
             padding: 35px 25px; border-radius: 25px 25px 0 0;
             animation: slideUp 0.4s cubic-bezier(0, 0, 0.2, 1);
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .modal-header h3 { font-weight: 800; font-size: 1.4rem; }
+        .modal-header h3 { font-weight: 700; font-size: 1.3rem; }
 
         .input-box { margin-bottom: 18px; }
-        .input-box label { display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.9rem; color: #333; }
+        .input-box label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: #444; }
         .input-box input, .input-box textarea {
-            width: 100%; padding: 16px; border: 1px solid #e0e0e0; border-radius: 12px;
-            font-size: 1rem; outline: none; background: #fdfdfd; transition: 0.3s;
+            width: 100%; padding: 16px; border: 1px solid #ddd; border-radius: 15px;
+            font-size: 1rem; outline: none; background: #fdfbfd; transition: 0.3s;
         }
-        .input-box input:focus { border-color: #000; }
+        .input-box input:focus, .input-box textarea:focus { border-color: var(--primary-pink); background: #fff; }
 
         .confirm-btn {
-            width: 100%; background: #000; color: #fff; border: none;
-            padding: 20px; border-radius: 12px; font-weight: 800; font-size: 1.1rem;
+            width: 100%; background: linear-gradient(45deg, #ff6b9d, #c44569);
+            color: #fff; border: none;
+            padding: 20px; border-radius: 15px; font-weight: 800; font-size: 1.1rem;
             cursor: pointer; margin-top: 10px; display: flex; justify-content: center; align-items: center; gap: 10px;
         }
     </style>
@@ -71,9 +119,9 @@
 <body>
 
     <nav class="navbar">
-        <i class="fas fa-bars"></i>
-        <div class="logo">YAAYAA STORE</div>
-        <i class="fas fa-shopping-bag"></i>
+        <i class="fas fa-bars-staggered" style="color:var(--dark-pink);"></i>
+        <a href="#" class="logo">Yaayaa Store ✨</a>
+        <i class="fas fa-cart-shopping" style="color:var(--dark-pink);"></i>
     </nav>
 
     <div class="product-page">
@@ -95,7 +143,7 @@
     <div class="bottom-bar">
         <div class="qty-input">
             <button class="qty-btn" onclick="changeQty(-1)">-</button>
-            <span id="display-qty" style="margin: 0 12px; font-weight: 800;">1</span>
+            <span id="display-qty" style="margin: 0 12px; font-weight: 700;">1</span>
             <button class="qty-btn" onclick="changeQty(1)">+</button>
         </div>
         <button class="order-btn" onclick="openCheckout()">
@@ -106,8 +154,8 @@
     <div class="checkout-modal" id="modal">
         <form class="checkout-content" action="https://formspree.io/f/xjgjkvqv" method="POST">
             <div class="modal-header">
-                <h3>تفاصيل الشحن 🚚</h3>
-                <i class="fas fa-times" onclick="closeCheckout()" style="cursor:pointer; font-size:1.5rem;"></i>
+                <h3>تفاصيل الشحن ✨🚚</h3>
+                <i class="fas fa-times" onclick="closeCheckout()" style="cursor:pointer; font-size:1.5rem; color: var(--dark-pink);"></i>
             </div>
 
             <input type="hidden" name="Product" value="Diesel Black Cap">
@@ -130,7 +178,7 @@
             </div>
 
             <button type="submit" class="confirm-btn">
-                تأكيد الطلب الآن <i class="fas fa-check-circle"></i>
+                تأكيد الطلب الآن | Confirm 🛍️✨
             </button>
         </form>
     </div>
