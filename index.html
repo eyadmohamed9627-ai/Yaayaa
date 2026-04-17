@@ -24,12 +24,12 @@
             background: white; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #eee;
         }
         .logo { font-weight: 900; font-size: 1.4rem; color: var(--dark-royal); text-decoration: none; letter-spacing: 2px; }
-        .cart-icon { position: relative; cursor: pointer; font-size: 1.4rem; color: var(--hafan-dark); }
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.4rem; color: var(--hafan-dark); transition: 0.3s; }
         .badge { position: absolute; top: -5px; right: -8px; background: #fb7185; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; }
 
         /* Hero Section */
         .hero {
-            height: 70vh; 
+            height: 40vh; 
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
             url('https://i.ibb.co/zTXJKbdZ/IMG-1884.jpg') no-repeat center;
             background-size: cover; 
@@ -41,39 +41,57 @@
             text-align: center;
         }
         .hero h1 { font-size: 2.5rem; font-weight: 900; margin-bottom: 5px; }
-        .hero p { letter-spacing: 2px; font-size: 1rem; margin-bottom: 20px; }
-        .shop-btn { background: var(--nude-logo); color: white; padding: 14px 40px; border-radius: 50px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 1.1rem; }
-        .shop-btn:hover { background: var(--hafan-dark); transform: scale(1.05); }
+
+        /* Category Filter */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px 10px;
+            position: sticky;
+            top: 60px;
+            background: var(--bg-light);
+            z-index: 900;
+        }
+        .tab-btn {
+            padding: 8px 25px;
+            border-radius: 20px;
+            border: 1px solid var(--nude-logo);
+            background: white;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
+            background: var(--nude-logo);
+            color: white;
+        }
 
         /* Product Grid */
-        .container { padding: 20px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .container { padding: 10px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 800px; margin: auto; }
         .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .card img { width: 100%; height: 180px; object-fit: cover; }
+        .card img { width: 100%; height: 220px; object-fit: cover; display: block; }
         .card-info { padding: 12px; text-align: center; }
         .price { color: var(--hafan-dark); font-weight: 900; margin-top: 5px; }
 
-        /* Overlay */
+        /* Overlays */
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 2000; display: none; overflow-y: auto; }
         .close { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; z-index: 10; cursor: pointer; background: rgba(255,255,255,0.8); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
-        .main-img { width: 100%; height: 45vh; object-fit: cover; }
+        .main-img { width: 100%; height: 50vh; object-fit: contain; background: #fff; }
         .content { padding: 25px; margin-bottom: 80px; }
-        .swatch { width: 35px; height: 35px; border-radius: 50%; border: 2px solid #ddd; cursor: pointer; margin: 10px 5px; display: inline-block; transition: 0.2s; }
-        .swatch.active { border-color: var(--hafan-dark); transform: scale(1.2); box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-
+        .swatch { width: 35px; height: 35px; border-radius: 50%; border: 2px solid #ddd; cursor: pointer; margin: 10px 5px; display: inline-block; }
+        .swatch.active { border-color: var(--hafan-dark); transform: scale(1.2); }
         .footer-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 15px 20px; border-top: 1px solid #eee; z-index: 2100; }
         .add-btn { width: 100%; background: var(--dark-royal); color: white; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; padding: 15px; font-size: 1rem; }
 
         /* Cart Page */
         .cart-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fafafa; z-index: 3000; display: none; flex-direction: column; }
         .cart-items-container { flex: 1; overflow-y: auto; padding-top: 10px; }
-        .cart-item { display: flex; gap: 15px; background: white; padding: 12px; border-radius: 12px; margin: 8px 15px; align-items: center; position: relative; }
-        .cart-item img { width: 70px; height: 70px; border-radius: 8px; object-fit: cover; }
-        .remove-item { position: absolute; left: 15px; color: #ff4d4d; cursor: pointer; font-size: 1.1rem; }
-        
-        .total-box { padding: 15px 25px; background: #fff; border-top: 2px dashed #eee; text-align: center; font-weight: 900; font-size: 1.2rem; color: var(--hafan-dark); }
-        .form-box { background: white; padding: 20px; border-radius: 20px 20px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); }
-        .input-lx { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 10px; outline: none; font-size: 0.9rem; }
+        .cart-item { display: flex; gap: 15px; background: white; padding: 12px; border-radius: 12px; margin: 8px 15px; align-items: center; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .cart-item img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+        .remove-item { position: absolute; left: 15px; color: #ff4d4d; cursor: pointer; }
+        .total-box { padding: 15px; text-align: center; font-weight: 900; font-size: 1.2rem; background: #fff; border-top: 1px solid #eee; }
+        .input-lx { width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 10px; font-size: 1rem; outline: none; }
     </style>
 </head>
 <body>
@@ -88,8 +106,13 @@
 
     <div class="hero">
         <h1>YAAYAA STORE</h1>
-        <p>Luxury Leather Bags</p>
-        <button class="shop-btn" onclick="document.getElementById('bagGrid').scrollIntoView({behavior: 'smooth'})">تسوقي الآن</button>
+        <p>Luxury Collections</p>
+    </div>
+
+    <div class="filter-tabs">
+        <button class="tab-btn active" onclick="filterProducts('all', this)">الكل</button>
+        <button class="tab-btn" onclick="filterProducts('bags', this)">الشنط</button>
+        <button class="tab-btn" onclick="filterProducts('brooch', this)">بروشات</button>
     </div>
 
     <div class="container" id="bagGrid"></div>
@@ -98,10 +121,10 @@
         <div class="close" onclick="closeProduct()"><i class="fas fa-times"></i></div>
         <img src="" id="d-img" class="main-img">
         <div class="content">
-            <h2 id="d-title" style="margin-bottom: 5px;"></h2>
-            <p id="d-price" style="font-size: 1.4rem; color: var(--hafan-dark); font-weight: 900;"></p>
+            <h2 id="d-title"></h2>
+            <p id="d-price" style="font-size: 1.4rem; font-weight: 900; color: var(--hafan-dark);"></p>
             <div style="margin: 20px 0;">
-                <p style="font-weight:700;">الألوان المتاحة:</p>
+                <p id="variantLabel" style="font-weight:700;">الخيارات المتاحة:</p>
                 <div id="swatchList"></div>
             </div>
             <div style="background: #fff; padding: 15px; border-radius: 10px; border-right: 4px solid var(--nude-logo);">
@@ -116,62 +139,74 @@
     <div class="cart-page" id="cartPage">
         <div class="navbar">
             <div class="logo">سلتك ✨</div>
-            <i class="fas fa-arrow-left" onclick="closeCart()" style="cursor:pointer; font-size: 1.2rem;"></i>
+            <i class="fas fa-arrow-left" style="cursor:pointer" onclick="closeCart()"></i>
         </div>
         <div class="cart-items-container" id="cartList"></div>
         <div class="total-box" id="totalBox">الإجمالي: 0 EGP</div>
-        <form action="https://formspree.io/f/xbdqogaw" method="POST" class="form-box" onsubmit="return validateForm()">
+        
+        <form action="https://formspree.io/f/xbdqogaw" method="POST" class="form-box" style="padding: 20px;" onsubmit="return validateForm()">
             <input type="hidden" name="تفاصيل الطلب" id="hiddenData">
             <input type="text" name="الاسم" class="input-lx" placeholder="الاسم بالكامل" required>
             <input type="tel" name="الموبايل" class="input-lx" placeholder="رقم الموبايل" required>
             <textarea name="العنوان" class="input-lx" placeholder="العنوان بالتفصيل" required></textarea>
-            <button type="submit" class="add-btn">تأكيد الطلب ✅</button>
+            <button type="submit" class="add-btn" style="background: #22c55e;">تأكيد الطلب ✅</button>
         </form>
     </div>
 
     <script>
-        const bags = [
-            { id: 1, name: "couch", price: 750, variants: [
+        const products = [
+            { id: 1, category: "bags", name: "Couch Bag", price: 750, variants: [
                 { color: "#FFFFFF", img: "https://i.ibb.co/7tqY7cT9/IMG-1886.jpg", name: "أبيض" },
                 { color: "#1a1a1a", img: "https://i.ibb.co/G4V6qdCt/IMG-1885.jpg", name: "أسود" },
-                { color:"#ffd700", img: "https://i.ibb.co/fJtJ5sk/IMG-1888.png", name: "ذهبي" }
+                { color: "#ffd700", img: "https://i.ibb.co/fJtJ5sk/IMG-1888.png", name: "ذهبي" }
             ]},
-            { id: 2, name: "Lv Jeans", price: 1600, variants: [
-                { color:"#6F8FAF", img: "https://i.ibb.co/7Jd6k9L2/eb1af371-9d7c-40d8-970b-c6060651d6b7.jpg", name: "جينس" }
+            { id: 2, category: "bags", name: "Lv Jeans", price: 1600, variants: [
+                { color: "#6F8FAF", img: "https://i.ibb.co/7Jd6k9L2/eb1af371-9d7c-40d8-970b-c6060651d6b7.jpg", name: "جينس" }
             ]},
-            { id: 3, name: "Lv Luxury", price: 2650, variants: [
-                { color:"#6F8FAF", img: "https://i.ibb.co/p6X7kj81/a4f991d6-a384-41f5-99da-e9fa886f23a1.jpg", name: "جينس" }
+            { id: 4, category: "bags", name: "Lv Classic", price: 1700, variants: [
+                { color: "#d5bca2", img: "https://i.ibb.co/zHf5Jwc6/IMG-1893.jpg", name: "بنى" }
             ]},
-            { id: 4, name: "Lv", price: 1700, variants: [
-                { color:"#d5bca2", img: "https://i.ibb.co/zHf5Jwc6/IMG-1893.jpg", name: "بنى" }
+            { id: 101, category: "brooch", name: "Ysl", price: 250, variants: [
+                { color: "#ffd700", img: "https://i.ibb.co/7dwgLvZH/IMG-1937.png", name: "ذهبي" },
+                { color: "#B9F2FF", img: "https://i.ibb.co/tPc1kCYX/IMG-1940.png", name: "فضي/دايموند" }
             ]},
-            { id: 5, name: "Lv Mini", price: 480, variants: [
-                { color:"#d5bca2", img: "https://i.ibb.co/qFk4dHR2/IMG-1895.jpg", name: "بنى" }
-            ]} // تم تصحيح القوس هنا
+            { id: 102, category: "brooch", name: "Pearl Elegance", price: 200, variants: [
+                { color: "#ffd700", img: "https://i.ibb.co/wFq184F8/IMG-1942.png", name: "ذهبي" },
+                { color: "#f0f0f0", img: "https://i.ibb.co/zTFQYsHw/IMG-1943.png", name: "لؤلؤي" }  
+            ] }
         ];
 
         let cart = [];
         let currentProduct = null;
         let selectedVariant = null;
 
-        function renderProducts() {
+        function renderProducts(filter = 'all') {
             const grid = document.getElementById('bagGrid');
-            grid.innerHTML = bags.map(b => `
-                <div class="card" onclick="viewProduct(${b.id})">
-                    <img src="${b.variants[0].img}" alt="${b.name}">
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+            
+            grid.innerHTML = filtered.map(p => `
+                <div class="card" onclick="viewProduct(${p.id})">
+                    <img src="${p.variants[0].img}" alt="${p.name}">
                     <div class="card-info">
-                        <div style="font-weight:700">${b.name}</div>
-                        <div class="price">${b.price} EGP</div>
+                        <div style="font-weight:700">${p.name}</div>
+                        <div class="price">${p.price} EGP</div>
                     </div>
                 </div>
             `).join('');
         }
 
+        function filterProducts(category, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts(category);
+        }
+
         function viewProduct(id) {
-            currentProduct = bags.find(b => b.id === id);
+            currentProduct = products.find(p => p.id === id);
             selectedVariant = currentProduct.variants[0];
             updateOverlayUI();
             document.getElementById('overlay').style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
 
         function updateOverlayUI() {
@@ -202,7 +237,10 @@
             });
             updateCartUI();
             closeProduct();
-            alert("تمت الإضافة للسلة ✨");
+            
+            const icon = document.querySelector('.cart-icon');
+            icon.style.transform = 'scale(1.3)';
+            setTimeout(() => icon.style.transform = 'scale(1)', 300);
         }
 
         function removeFromCart(cartId) {
@@ -217,18 +255,18 @@
             
             badge.innerText = cart.length;
             let total = 0;
-            let summaryText = "";
+            let summaryText = "طلب جديد من المتجر:\n";
 
             cl.innerHTML = cart.map((item) => {
                 total += item.price;
-                summaryText += `- ${item.name} (${item.variantName}) [${item.price} EGP]\n`;
+                summaryText += `- ${item.name} | اللون: ${item.variantName} | السعر: ${item.price} EGP\n`;
                 return `
                     <div class="cart-item">
                         <img src="${item.img}">
                         <div>
                             <div style="font-weight:700">${item.name}</div>
-                            <div style="font-size:0.8rem; color: #777;">اللون: ${item.variantName}</div>
-                            <div style="font-weight:900; color:var(--hafan-dark)">${item.price} EGP</div>
+                            <div style="font-size:0.8rem">اللون: ${item.variantName}</div>
+                            <div style="font-weight:900">${item.price} EGP</div>
                         </div>
                         <i class="fas fa-trash remove-item" onclick="removeFromCart(${item.cartId})"></i>
                     </div>
@@ -239,15 +277,18 @@
             document.getElementById('hiddenData').value = summaryText + `\nإجمالي الحساب: ${total} EGP`;
         }
 
-        function openCart() { 
-            if(cart.length === 0) { alert("السلة فارغة حالياً"); return; }
-            document.getElementById('cartPage').style.display = 'flex'; 
-        }
+        function openCart() { document.getElementById('cartPage').style.display = 'flex'; }
         function closeCart() { document.getElementById('cartPage').style.display = 'none'; }
-        function closeProduct() { document.getElementById('overlay').style.display = 'none'; }
-
+        function closeProduct() { 
+            document.getElementById('overlay').style.display = 'none'; 
+            document.body.style.overflow = 'auto';
+        }
+        
         function validateForm() {
-            if(cart.length === 0) { alert("برجاء إضافة منتجات للسلة أولاً"); return false; }
+            if(cart.length === 0) { 
+                alert("السلة فارغة! أضف منتجات أولاً."); 
+                return false; 
+            }
             return true;
         }
 
